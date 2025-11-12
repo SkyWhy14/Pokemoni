@@ -6,7 +6,7 @@
 - [ ] Izveidota klase ElektriskaisP
 - [ ] Izveidota klase UdensP
 - [ ] Izveidota klase Pokemons
-- [ ] 
+- [X] 
 
 
 
