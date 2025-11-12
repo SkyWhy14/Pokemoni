@@ -3,8 +3,8 @@ import javax.swing.JOptionPane;
 public class ElectriskaisP extends Pokemons {
 	private int elektroStiprums;
 
-	public ElectriskaisP(String nosaukums, int veseliba, int uzbrukums, int elektroStiprums) {
-		super(nosaukums, veseliba, uzbrukums);
+	public ElectriskaisP(String nosaukums, String string, int uzbrukums, int elektroStiprums) {
+		super(nosaukums, string, uzbrukums, elektroStiprums);
 		this.elektroStiprums = elektroStiprums;
 	}
 

@@ -4,8 +4,9 @@ public class UdensP  extends Pokemons {
 	private int udensSpiediens;
 	//viss ar JOptionPane
 
-	public UdensP(String nosaukums, int veseliba, int uzbrukums, int udensSpiediens) {
-		super(nosaukums, veseliba, uzbrukums);
+	public UdensP(String nosaukums, String string, int uzbrukums, int udensSpiediens) {
+		super(nosaukums, string, uzbrukums, udensSpiediens);
+		
 		this.udensSpiediens = udensSpiediens;
 	}
 
@@ -27,6 +28,11 @@ public class UdensP  extends Pokemons {
 	public void attistit(int attistibasLimenis) {
 		uzbrukums += attistibasLimenis * 6; // Ūdens pokemoni iegūst lielāku uzbrukuma pieaugumu
 		JOptionPane.showMessageDialog(null, nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
+	}
+
+	public void izsmidzinatUdeni(Pokemons pokemons2) {
+		JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens smidzināšanu pret " + pokemons2.nosaukums + "!");
+		
 	}
 	
 

@@ -1,15 +1,21 @@
 import javax.swing.JOptionPane;
 
 public class Pokemons {
-		protected String nosaukums;
-	protected int veseliba;
-	protected int uzbrukums;
+    public String nosaukums;
+    public String tips;
+    public int veseliba;
+    public int uzbrukums;
 
-	public Pokemons(String nosaukums, int veseliba, int uzbrukums) {
-		this.nosaukums = nosaukums;
-		this.veseliba = veseliba;
-		this.uzbrukums = uzbrukums;
-	}
+    public Pokemons(String nosaukums, String tips, int veseliba, int uzbrukums) {
+        this.nosaukums = nosaukums;
+        this.tips = tips;
+        this.veseliba = veseliba;
+        this.uzbrukums = uzbrukums;
+    }
+	
+	
+
+	
 
 	public void uzbrukt() {
 		JOptionPane.showMessageDialog(null, nosaukums + " izmanto vispārīgo uzbrukumu ar spēku " + uzbrukums + "!");
