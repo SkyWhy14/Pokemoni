@@ -36,9 +36,17 @@ public class PokeDatnis {
 		
 		//Izveido Pokemonu objektus
 		ElectriskaisP pikachu = new ElectriskaisP("Pikachu", 100, 50, 20);
+		UdensP squirtle = new UdensP("Squirtle", 120, 40, 15);
+		Pokemons charmander = new Pokemons("Charmander", 90, 60) {
+			@Override
+			public void uzbrukt() {
+				System.out.println(nosaukums + " izmanto uguns uzbrukumu!");
+			}
+		};
+		
 	
-	//	};
-	//	
+		
+	
 		
 		
 		
