@@ -1,6 +1,8 @@
+import javax.swing.JOptionPane;
 
 public class UdensP  extends Pokemons {
 	private int udensSpiediens;
+	//viss ar JOptionPane
 
 	public UdensP(String nosaukums, int veseliba, int uzbrukums, int udensSpiediens) {
 		super(nosaukums, veseliba, uzbrukums);
@@ -9,22 +11,22 @@ public class UdensP  extends Pokemons {
 
 	@Override
 	public void uzbrukt() {
-		System.out.println(nosaukums + " izmanto ūdens uzbrukumu ar spiedienu " + udensSpiediens + "!");
+	JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens uzbrukumu ar spiedienu " + udensSpiediens + "!");
 	}
-
-	public void izveidotUdensSienu() {
-		System.out.println(nosaukums + " izveido ūdens sienu!");
+	public void palelinatPretinieku() {
+		JOptionPane.showMessageDialog(null, nosaukums + " ir samazinājis pretinieka ātrumu ar ūdens plūsmu!");
+		
 	}
 	public void izvairities() {
-		System.out.println(nosaukums + " izmanto ūdens plūsmu, lai izvairītos no uzbrukuma!");
+		JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens aizsardzību, lai izvairītos no uzbrukuma!");
 	}
 	public void dziedet(int dziedesana) {
 		veseliba += dziedesana + 5; // Ūdens pokemoni saņem papildu dziedināšanu
-		System.out.println(nosaukums + " ir dziedināts par " + (dziedesana + 5) + " punktiem! Pašreizējā veselība: " + veseliba);
+		JOptionPane.showMessageDialog(null, nosaukums + " ir dziedināts par " + (dziedesana + 5) + " punktiem! Pašreizējā veselība: " + veseliba);
 	}
 	public void attistit(int attistibasLimenis) {
-		uzbrukums += attistibasLimenis * 6; // Ūdens pokemoni iegūst vidēju uzbrukuma pieaugumu
-		System.out.println(nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
+		uzbrukums += attistibasLimenis * 6; // Ūdens pokemoni iegūst lielāku uzbrukuma pieaugumu
+		JOptionPane.showMessageDialog(null, nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
 	}
 	
 

@@ -1,5 +1,9 @@
-import javax.swing.ImageIcon;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class PokeDatnis {
 //izstradat objektiorientu programmas risinajumu par temu "Pokemoni".Prasibas ir noetikts ka programma satur vismaz 4 klases ja vajag var pievienot vel,Pokemons,ElektriskaisP,UdensP un PokeDatnis
@@ -32,56 +36,86 @@ public class PokeDatnis {
 		Metodes.izvaditPokemonGoSkanu();
 		Metodes.paradiPokemonPasauli();
 		
-		
-		
-		//Izveido Pokemonu objektus
-		ElectriskaisP pikachu = new ElectriskaisP("Pikachu", 100, 50, 20);
-		UdensP squirtle = new UdensP("Squirtle", 120, 40, 15);
-		Pokemons charmander = new Pokemons("Charmander", 90, 60) {
-			@Override
-			public void uzbrukt() {
-				System.out.println(nosaukums + " izmanto uguns uzbrukumu!");
-			}
-		};
-		
 		String izvele;
-		izvele = JOptionPane.showInputDialog(null,
-				"Izvēlieties pokemona veidu:\n1. Elektriskais Pokemon (Pikachu)\n2. Ūdens Pokemon (Squirtle)\n3. Uguns Pokemon (Charmander)",
-				"Pokemona izvēle", JOptionPane.QUESTION_MESSAGE);
-		switch (izvele) {
-		case "1":
-			pikachu.uzbrukt();
-			pikachu.stunPretinieku();
-			pikachu.izvairities();
-			pikachu.dziedet(20);
-			pikachu.attistit(2);
+		
+		
+		String [] pokemonuVeidi = {"Elektriskais Pokemons", "Ūdens Pokemons", "Parasts Pokemons"};
+		String[] darbibas = {"Izveidot jaunu pokemonu", 
+				 "Aplūkot pokemonus",
+				"Izsaukt pokemona metodi",
+				"Sākt pokemona turnīru", "Aizvērt programmu"};
+		
+		ArrayList<Pokemons> pokemoni = new ArrayList<>();
+		ArrayList<Pokemons> turniraPokemoni = new ArrayList<>();
+		
+		String izvelesID;
+		do {
+			izvele = (String) JOptionPane.showInputDialog(null, "Izvēlies darbību",
+					"Izvēlne", JOptionPane.QUESTION_MESSAGE, null
+					,darbibas, darbibas[0]);
+			if(izvele == null) break;
+			izvelesID = java.util.Arrays.asList(darbibas).indexOf(izvele)+"";
+			switch(izvelesID) {
+			
+			case "0":
+				Pokemons jaunsPokemons = Metodes.izveidotJaunuPokemonaObjektu(pokemonuVeidi);
+				if(jaunsPokemons != null) {
+					pokemoni.add(jaunsPokemons);
+					JOptionPane.showMessageDialog(null, "Veiksmīgi izveidots pokemons: " + jaunsPokemons.nosaukums,
+							"Pokemoni", JOptionPane.INFORMATION_MESSAGE);
+					}else {
+						JOptionPane.showMessageDialog(null, "Pokemona izveide atcelta",
+								"Pokemoni", JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+				break;
+				//izvada pokemona sarakstu ar scrollable text area
+			case "1":
+			 if(pokemoni.size() == 0) {
+					JOptionPane.showMessageDialog(null, "Nav izveidots neviens pokemons, ko aplūkot.",
+							"Pokemoni", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					StringBuilder pokemoniInfo = new StringBuilder();
+					pokemoniInfo.append("Elektiskais pokemons:\n");
+					for(Pokemons p : pokemoni) {
+						if(p instanceof ElectriskaisP) {
+							pokemoniInfo.append("- ").append(p.nosaukums).append("\n");
+						}
+					}
+					pokemoniInfo.append("\nŪdens pokemons:\n");
+					for(Pokemons p : pokemoni) {
+						if(p instanceof UdensP) {
+							pokemoniInfo.append("- ").append(p.nosaukums).append("\n");
+						}
+					}
+					pokemoniInfo.append("\nParasts pokemons:\n");
+					for(Pokemons p : pokemoni) {
+						if(!(p instanceof ElectriskaisP) && !(p instanceof UdensP)) {
+							pokemoniInfo.append("- ").append(p.nosaukums).append("\n");
+						}
+					}
+					JTextArea textArea = new JTextArea(pokemoniInfo.toString());
+					textArea.setEditable(false);
+					JScrollPane scrollPane = new JScrollPane(textArea);
+					scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					scrollPane.setPreferredSize(new java.awt.Dimension(500, 400));
+					JOptionPane.showMessageDialog(null, scrollPane, "Visu pokemonu saraksts",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			break;
 			case "2":
-				squirtle.uzbrukt();
-				squirtle.izveidotUdensSienu();
-				squirtle.izvairities();
-				squirtle.dziedet(15);
-				squirtle.attistit(3);
+			//	Metodes.izsauktPokemonaMetodi(pokemoni);
 				break;
-				case "3":
-					charmander.uzbrukt();
-					charmander.izvairities();
-					charmander.dziedet(10);
-					charmander.attistit(1);
-					break;
-					default:
-						JOptionPane.showMessageDialog(null, "Nederīga izvēle! Lūdzu, izvēlieties pareizu pokemona veidu.",
-								"Kļūda", JOptionPane.ERROR_MESSAGE);
-						break;
-						
-		}
-		
-	
-		
-	
-		
-		
-		
+			case "3":
+			//	Metodes.saktPokemonaTurniru(pokemoni, turniraPokemoni);
+				break;
+			}
+			
+			
+			
+		}while(izvele != null && !izvele.equals("Aizvērt programmu"));
+		JOptionPane.showMessageDialog(null, "Paldies par spēlēšanu! Uz redzēšanos Pokemon pasaulē!",
+				"Pokemoni", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 		
