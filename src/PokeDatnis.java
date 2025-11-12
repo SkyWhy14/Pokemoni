@@ -6,7 +6,7 @@ public class PokeDatnis {
 	//Klase Pokedatnis satur programmas main dalu no tas veic jaunu pokemonu izveidi,atributu aplukosanu metozu izsauksanu cinas uzsaksanu,tiek nodrosinatas darbibas ar jebkura tipa pokemona objektiem .
 	//Pokemons ir abstrakta bāzes klase, savukārt klases Elektriskais un UdensP ir apakšklases, kuras interpretē jebkuram Pokemonam raksturīgās metodes.
 	//Programmai ir jāatbilst sekojošām prasībām: 
-	// klasēs ieviesti vismaz 4 atribūti un 4 metodes (vismaz viena no bāzes klases metodēm ir abstrakta)
+	//klasēs ieviesti vismaz 4 atribūti un 4 metodes (vismaz viena no bāzes klases metodēm ir abstrakta)
 	//Pokemons ir abstrakta klase un strādājot ar apakškalsēm, tiek ievēroti polimorfisma pamatprincipi
 	//tiek nodrošināta funkcionalitāte jauna Pokemona (ElektriskaisP, UdensP) izveidei un uzglabāšanai
 	//tiek nodrošināta iespēja izsaukt metodes izvēlētajam pokemona objektam (uzbrukt, izvairīties, dziedēt, attīstīt, utml.)
@@ -44,37 +44,12 @@ public class PokeDatnis {
 			}
 		};
 		
-		String izvele;
-		izvele = JOptionPane.showInputDialog(null,
-				"Izvēlieties pokemona veidu:\n1. Elektriskais Pokemon (Pikachu)\n2. Ūdens Pokemon (Squirtle)\n3. Uguns Pokemon (Charmander)",
-				"Pokemona izvēle", JOptionPane.QUESTION_MESSAGE);
-		switch (izvele) {
-		case "1":
-			pikachu.uzbrukt();
-			pikachu.stunPretinieku();
-			pikachu.izvairities();
-			pikachu.dziedet(20);
-			pikachu.attistit(2);
-			break;
-			case "2":
-				squirtle.uzbrukt();
-				squirtle.izveidotUdensSienu();
-				squirtle.izvairities();
-				squirtle.dziedet(15);
-				squirtle.attistit(3);
-				break;
-				case "3":
-					charmander.uzbrukt();
-					charmander.izvairities();
-					charmander.dziedet(10);
-					charmander.attistit(1);
-					break;
-					default:
-						JOptionPane.showMessageDialog(null, "Nederīga izvēle! Lūdzu, izvēlieties pareizu pokemona veidu.",
-								"Kļūda", JOptionPane.ERROR_MESSAGE);
-						break;
+		
+
+		Double izvele = Metodes.skaitlaParbaude("Izvēlieties pokemona veidu:\n1. Elektriskais Pokemon (Pikachu)\n2. "
+				+ "Ūdens Pokemon (Squirtle)\n3. Uguns Pokemon (Charmander)", 1, 3, "Ieraksti ciparu");
+		
 						
-		}
 		
 	
 		
