@@ -1,208 +1,196 @@
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
-	
-	
-	public static void paradiPokemonPasauliArSkanu() {
-	    try {
-	        // Ielādē audio failu
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-	            new File(".//audio//pokemon-go.wav").getAbsoluteFile()
-	        );
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.start(); // Sāk atskaņot skaņu
 
-	        // Ielādē attēlu (GIF)
-	        ImageIcon darbinieksGif = new ImageIcon(".//images//pokemon.gif");
+    public static void paradiPokemonPasauliArSkanu() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File(".//audio//pokemon-go.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
 
-	        // Parāda JOptionPane ar attēlu
-	        JOptionPane.showMessageDialog(
-	            null,
-	            "", // Ziņojuma teksts (tukšs)
-	            "Pokemon pasaule", // Loga virsraksts
-	            JOptionPane.INFORMATION_MESSAGE,
-	            darbinieksGif // Attēls
-	        );
+            ImageIcon img = new ImageIcon(".//images//pokemon.gif");
 
-	        // Kad logs ir aizvērts (OK nospiests), apstādina skaņu
-	        clip.stop();
-	        clip.close();
+            JOptionPane.showMessageDialog(null, "", "Pokemon pasaule",
+                    JOptionPane.INFORMATION_MESSAGE, img);
 
-	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-	        e.printStackTrace();
-	    }
-	}
+            clip.stop();
+            clip.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static String virknesParbaude(String zinojums, String noklusejums) {
+        String virkne;
+        do {
+            virkne = JOptionPane.showInputDialog(zinojums, noklusejums);
+            if (virkne == null) return null;
+        } while (!Pattern.matches("^[\\p{L} .'-]{1,40}$", virkne));
+        return virkne;
+    }
 
-	
-	public static String virknesParbaude(String zinojums, String noklusejums) {
-		String virkne;
-		do {
-			virkne = JOptionPane.showInputDialog(zinojums, noklusejums);
-			if(virkne == null)
-				return null;
-		}while(!Pattern.matches("^[\\p{L} .]+$", virkne));
-		return virkne;
-	}
-	public static int SkaitlaParbaude(String zinojums, double min, double max, String noklusejums) {
-		String ievade;
-		int skaitlis;
-		while(true) {
-			ievade = (String)JOptionPane.showInputDialog(null, zinojums, 
-					"Datu ievade", JOptionPane.INFORMATION_MESSAGE, null, null, noklusejums); 
-			if(ievade == null)
-				return -1;
-			try {
-				skaitlis = Integer.parseInt(ievade);
-				if(skaitlis < min || skaitlis > max) {
-					JOptionPane.showMessageDialog(null, 
-					"Norādīts nederīgs skaitlis", "Nekorekti dati",
-					JOptionPane.WARNING_MESSAGE);
-					continue;
-				}
-				
-				return skaitlis;
-			}catch(NumberFormatException e) {
-				JOptionPane.showMessageDialog(null,
-					"Netika ievadīts pareizs skaitlis", "Nekorekti dati",
-					JOptionPane.WARNING_MESSAGE);
-			}
-		}
-		}
-	
-	public static Pokemons izveidotJaunuPokemonaObjektu(String[] pokemonuVeidi) {
-	    String izvele = (String) JOptionPane.showInputDialog(
-	        null,
-	        "Izvēlies pokemona veidu",
-	        "Izvēlne",
-	        JOptionPane.QUESTION_MESSAGE,
-	        null,
-	        pokemonuVeidi,
-	        pokemonuVeidi[0]
-	    );
+    public static int SkaitlaParbaude(String zinojums, String noklusejums, int max, int min) {
+        while (true) {
+            String ievade = JOptionPane.showInputDialog(zinojums, noklusejums);
+            if (ievade == null) return -1;
+            try {
+                int sk = Integer.parseInt(ievade);
+                if (sk < min || sk > max)
+                    JOptionPane.showMessageDialog(null,
+                            "Skaitlim jābūt no " + min + " līdz " + max);
+                else return sk;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ievadi skaitli!");
+            }
+        }
+    }
 
-	    if (izvele == null) return null;
+    // IZVEIDO POKEMONU AR BASIC VĒRTĪBĀM
+    public static Pokemons izveidotPokemonu() {
 
-	    switch (izvele) {
-	        case "Elektriskais Pokemons":
-	            String nosaukums = virknesParbaude("Ievadi pokemona nosaukumu:", "Pikachu");
-	            if (nosaukums == null) return null;
-	            int veseliba = SkaitlaParbaude("Ievadi pokemona veselību (1-500):", 1, 500, "100");
-	            if (veseliba == -1) return null;
-	            int uzbrukums = SkaitlaParbaude("Ievadi pokemona uzbrukuma spēku (1-100):", 1, 100, "20");
-	            if (uzbrukums == -1) return null;
-	            return new ElectriskaisP(nosaukums, "Elektriskais", veseliba, uzbrukums);
+        // TIPU SARAKSTS
+        ArrayList<String> tipi = new ArrayList<>();
+        tipi.add("Elektriskais");
+        tipi.add("Ūdens");
+        tipi.add("Parastais");
 
-	        case "Ūdens Pokemons":
-	            String nosaukums1 = virknesParbaude("Ievadi pokemona nosaukumu:", "Squirtle");
-	            if (nosaukums1 == null) return null;
-	            int veseliba1 = SkaitlaParbaude("Ievadi pokemona veselību (1-500):", 1, 500, "100");
-	            if (veseliba1 == -1) return null;
-	            int uzbrukums1 = SkaitlaParbaude("Ievadi pokemona uzbrukuma spēku (1-100):", 1, 100, "20");
-	            if (uzbrukums1 == -1) return null;
-	            return new UdensP(nosaukums1, "Ūdens", veseliba1, uzbrukums1);
+        // Nosaukuma ievade
+        String nosaukums = virknesParbaude(
+                "Ievadi Pokemona nosaukumu:", "Pikachu");
+        if (nosaukums == null) return null;
 
-	        case "Parasts Pokemons":
-	            String nosaukums2 = virknesParbaude("Ievadi pokemona nosaukumu:", "Eevee");
-	            if (nosaukums2 == null) return null;
-	            int veseliba2 = SkaitlaParbaude("Ievadi pokemona veselību (1-500):", 1, 500, "100");
-	            if (veseliba2 == -1) return null;
-	            int uzbrukums2 = SkaitlaParbaude("Ievadi pokemona uzbrukuma spēku (1-100):", 1, 100, "20");
-	            if (uzbrukums2 == -1) return null;
-	            return new Pokemons(nosaukums2, "Parasts", veseliba2, uzbrukums2);
+        // Tipa izvēle
+        String tips = (String) JOptionPane.showInputDialog(
+                null,
+                "Izvēlies Pokemona tipu:",
+                "Pokemona tips",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                tipi.toArray(new String[0]),
+                tipi.get(0)
+        );
+        if (tips == null) return null;
 
-	        default:
-	            return null;
-	    }
-	}
-	
+        Pokemons p = null;
 
-	 //parada ar kadu pokemona var cinities un izmanto JOptionpane lai izveletos ar kadu pokemona cinities
-	 //un ir iespeja izvairities no uzbrukuma vai izmantot specialo uzbrukumu un ir iespeja atcelt cinisanos
-	//izmanto jau eskistoso pokemoni sarakstu
-	public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
-		
-		
-	}
-		 
-		 
-	 
-	 //izveido metodi pokems uzbruk cits pokemona objektam
-	 //un atnemt veselibu atkariba no uzbrukuma speka
-		public static void cinities(Pokemons pokemons1, Pokemons pokemons2) {
-			pokemons2.veseliba -= pokemons1.uzbrukums;
-			if(pokemons2.veseliba < 0) pokemons2.veseliba = 0;
-			JOptionPane.showMessageDialog(null, pokemons1.nosaukums + " uzbruka " + pokemons2.nosaukums +
-					" un atņēma " + pokemons1.uzbrukums + " veselības punktus! " +
-					pokemons2.nosaukums + " pašreizējā veselība: " + pokemons2.veseliba,
-					"Cīņa", JOptionPane.INFORMATION_MESSAGE);
-			
-		}
-		//ja ir iespeja izsauc specialo uzbrukumu atkariba no pokemona veida (elektiskais,udens)
-		public static void izsauktPokemonaSpecialoUzbrukumu(Pokemons pokemons1, Pokemons pokemons2) {
-			if(pokemons1 instanceof ElectriskaisP) {
-				((ElectriskaisP) pokemons1).paralizetPretinieku();
-			}else if(pokemons1 instanceof UdensP) {
-				((UdensP) pokemons1).izsmidzinatUdeni(pokemons2);
-			}else {
-				JOptionPane.showMessageDialog(null, pokemons1.nosaukums + " nav speciāla uzbrukuma.",
-						"Speciālais uzbrukums", JOptionPane.INFORMATION_MESSAGE);
-			}
-			
-			
-		}
-	public static void izvairitiesNoUzbrukuma(Pokemons pokemons1) {
-		if(pokemons1 instanceof ElectriskaisP) {
-			((ElectriskaisP) pokemons1).izvairities();
-		}else if(pokemons1 instanceof UdensP) {
-			((UdensP) pokemons1).izvairities();
-		}else {
-			JOptionPane.showMessageDialog(null, pokemons1.nosaukums + " nevar izvairīties no uzbrukuma.",
-					"Izvairīšanās", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
-	
-	
-		
-	//ar joptionpane izsauc pokemona metodi kur var cinities ar citu pokemona objektu vai dziedinet vai attistit
-	public static void izsauktPokemonaMetodi(ArrayList<Pokemons> pokemoni) {
-		String izvele;
-		String[] metodes = {"Uzbrukt", "Dziedet", "Attistit", "Atcelt"};
-		izvele = (String) JOptionPane.showInputDialog(null, "Izvēlies pokemona metodi",
-				"Izvēlne", JOptionPane.QUESTION_MESSAGE, null
-				,metodes, metodes[0]);
-		if(izvele == null || izvele.equals("Atcelt")) return;
-		String izvelesID = java.util.Arrays.asList(metodes).indexOf(izvele)+"";
-		switch(izvelesID) {
-		case "0":
-			CinitiesArCituPokemonu(new ArrayList<Pokemons>());
-			break;
-			case "1":
-				//izsauc dziedet metodi
-				break;
-				case "2":
-					//izsauc attistit metodi
-					break;
-					default:
-		}
-	}
-	public static void saktPokemonaTurniru() {
-	
-		
-	}
-	
-	
+        switch (tips) {
+            case "Elektriskais":
+                p = new ElectriskaisP(
+                        nosaukums,
+                        Pokemons.BASIC_HP,
+                        Pokemons.BASIC_ATTACK,
+                        Pokemons.BASIC_DEFENSE,
+                        "Elektriskais"
+                );
+                break;
 
+            case "Ūdens":
+                p = new UdensP(
+                        nosaukums,
+                        Pokemons.BASIC_HP,
+                        Pokemons.BASIC_ATTACK,
+                        Pokemons.BASIC_DEFENSE,
+                        "Ūdens"
+                );
+                break;
+
+            case "Parastais":
+                p = new NormalaisPokemons(
+                        nosaukums,
+                        Pokemons.BASIC_HP,
+                        Pokemons.BASIC_ATTACK,
+                        Pokemons.BASIC_DEFENSE,
+                        "Parastais"
+                );
+                break;
+        }
+
+        return p;
+    }
+
+    public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
+        if (pokemoni.size() < 2) {
+            JOptionPane.showMessageDialog(null, "Nepietiek pokemonu!");
+            return;
+        }
+
+        Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
+
+        Pokemons p1 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Pirmais pokemons:", "Cīņa",
+                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[0]);
+
+        Pokemons p2 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Otrais pokemons:", "Cīņa",
+                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[1]);
+
+        if (p1 == null || p2 == null || p1 == p2) return;
+
+        while (p1.isAlive() && p2.isAlive()) {
+            String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
+            String act = (String) JOptionPane.showInputDialog(null,
+                    p1 + "\nVS\n" + p2 + "\nIzvēlies gājienu:",
+                    "Cīņa", JOptionPane.QUESTION_MESSAGE,
+                    null, actions, actions[0]);
+
+            if (act == null || act.equals("Beigt cīņu")) return;
+
+            doAction(p1, p2, act);
+
+            if (!p2.isAlive()) break;
+
+            double r = Math.random();
+            if (p2.specialAvailable && r < 0.3)
+                doAction(p2, p1, "Speciālais");
+            else
+                doAction(p2, p1, "Uzbrukt");
+        }
+
+        JOptionPane.showMessageDialog(null,
+                "Uzvarētājs: " + (p1.isAlive() ? p1 : p2));
+    }
+
+    private static void doAction(Pokemons actor, Pokemons target, String act) {
+        switch (act) {
+            case "Uzbrukt":
+                target.takeDamage(actor.basicAttack());
+                break;
+            case "Speciālais":
+                actor.specialAttack(target);
+                break;
+            case "Aizsardzība +":
+                actor.boostDefense(3);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Nezināma darbība.");
+        }
+    }
+
+    public static void Dziedeties(Pokemons p) {
+        int healAmount = SkaitlaParbaude(
+                "Cik HP atgūt (1–" + (p.getMaxHp() - p.getVeseliba()) + ")?",
+                "10", p.getMaxHp() - p.getVeseliba(), 1
+        );
+        if (healAmount != -1) p.heal(healAmount);
+    }
+
+    public static void AttistitLimeni(Pokemons p) {
+        int healAmount = p.getMaxHp() - p.getVeseliba();
+        p.heal(healAmount);
+        p.uzbrukums += 5;
+        p.defense += 2;
+
+        JOptionPane.showMessageDialog(null,
+                p.getNosaukums() + " līmenis paaugstināts!\n"
+                        + "HP pilns.\n"
+                        + "Uzbrukums +5\n"
+                        + "Aizsardzība +2");
+    }
 }

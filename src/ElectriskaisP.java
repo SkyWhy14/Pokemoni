@@ -1,30 +1,32 @@
+// ElectricPokemon.java
 import javax.swing.JOptionPane;
+import java.util.Random;
 
 public class ElectriskaisP extends Pokemons {
-	private int elektroStiprums;
+    
 
-	public ElectriskaisP(String nosaukums, String string, int uzbrukums, int elektroStiprums) {
-		super(nosaukums, string, uzbrukums, elektroStiprums);
-		this.elektroStiprums = elektroStiprums;
+	private Random rnd = new Random();
+
+   public ElectriskaisP(String nosaukums, int hp, int attack, int defense, String string) {
+		super(nosaukums, nosaukums,"Elektriskais");
 	}
 
-	@Override
-	public void uzbrukt() {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto elektrisko uzbrukumu ar stiprumu " + elektroStiprums + "!");
-	}
-	public void paralizetPretinieku() {
-		JOptionPane.showMessageDialog(null, nosaukums + " ir paralizējis pretinieku ar elektrisko šoku!");
-		
-	}
-	public void izvairities() {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto elektrisko lauku, lai izvairītos no uzbrukuma!");
-	}
-	public void dziedet(int dziedesana) {
-		veseliba += dziedesana + 3; // Elektriskie pokemoni saņem papildu dziedināšanu
-		JOptionPane.showMessageDialog(null, nosaukums + " ir dziedināts par " + (dziedesana + 3) + " punktiem! Pašreizējā veselība: " + veseliba);
-	}
-	public void attistit(int attistibasLimenis) {
-		uzbrukums += attistibasLimenis * 4; // Elektriskie pokemoni iegūst vidēju uzbrukuma pieaugumu
-		JOptionPane.showMessageDialog(null, nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
-	}
+    // speciālais uzbrukums: var paralizēt pretinieku (ar varbūtību)
+    @Override
+    public void specialAttack(Pokemons target) {
+        if (!specialAvailable) {
+            JOptionPane.showMessageDialog(null, nosaukums + " nevar izmantot speciālo — tas jau izmantots.");
+            return;
+        }
+        specialAvailable = false;
+        int dmg = (int)(uzbrukums * 1.7);
+        JOptionPane.showMessageDialog(null, nosaukums + " izmanto Elektrisko šoku pret " + target.nosaukums + " un nodara " + dmg + " bojājumus!");
+        target.takeDamage(dmg);
+        // paralīzes iespēja:
+        if (target.isAlive() && rnd.nextInt(100) < 30) {
+            // 30% paralize: nākamajā raundā ai/lietotājs var netikt aktivs — šis var tikt paplašināts ar statusiem
+            JOptionPane.showMessageDialog(null, target.nosaukums + " ir paralizēts (varbūtība 30%)! Nākamajā raundā var palaist gājienu.");
+            // vienkārši demonstrācija — var ieviest statusu laukā
+        }
+    }
 }

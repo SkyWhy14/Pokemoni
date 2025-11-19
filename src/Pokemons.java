@@ -1,44 +1,131 @@
 import javax.swing.JOptionPane;
 
-public class Pokemons {
-    public String nosaukums;
-    public String tips;
-    public int veseliba;
-    public int uzbrukums;
+public abstract class Pokemons {
+    protected String nosaukums;
+    protected int veseliba;
+    protected int maxHp;
+    protected int uzbrukums;
+    protected int defense;
+    protected boolean specialAvailable;
+    protected String tips;
+    protected int limenis;
 
-    public Pokemons(String nosaukums, String tips, int veseliba, int uzbrukums) {
+    // Basic/default vērtības
+    protected static final int BASIC_HP = 100;
+    protected static final int BASIC_ATTACK = 20;
+    protected static final int BASIC_DEFENSE = 10;
+    protected static final int BASIC_LEVEL = 1;
+
+    public Pokemons(String nosaukums, String tips, String string) {
         this.nosaukums = nosaukums;
         this.tips = tips;
-        this.veseliba = veseliba;
-        this.uzbrukums = uzbrukums;
+
+        // Uzstāda basic vērtības
+        this.maxHp = BASIC_HP;
+        this.veseliba = BASIC_HP;
+        this.uzbrukums = BASIC_ATTACK;
+        this.defense = BASIC_DEFENSE;
+        this.limenis = BASIC_LEVEL;
+
+        this.specialAvailable = true;
     }
-	
-	
 
-	
+    public boolean isAlive() {
+        return veseliba > 0;
+    }
 
-	public void uzbrukt() {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto vispārīgo uzbrukumu ar spēku " + uzbrukums + "!");
-	}
-	public void izvairities() {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto vispārīgo aizsardzību, lai izvairītos no uzbrukuma!");
-	}
-	public void dziedet(int dziedesana) {
-		veseliba += dziedesana;
-		JOptionPane.showMessageDialog(null, nosaukums + " ir dziedināts par " + dziedesana + " punktiem! Pašreizējā veselība: " + veseliba);
-	}
-	public void attistit(int attistibasLimenis) {
-		uzbrukums += attistibasLimenis * 5;
-		JOptionPane.showMessageDialog(null, nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
-	}
+    public String getNosaukums() {
+        return nosaukums;
+    }
 
-	public int izvaditInfo() {
-		JOptionPane.showMessageDialog(null, "Pokemona nosaukums: " + nosaukums +
-				"\nVeselība: " + veseliba +
-				"\nUzbrukuma spēks: " + uzbrukums,
-				"Pokemona informācija", JOptionPane.INFORMATION_MESSAGE);
-		return 0;
-	}
-	
+    public String getTips() {
+        return tips;
+    }
 
+    public int getVeseliba() {
+        return veseliba;
+    }
+
+    public int getUzbrukums() {
+        return uzbrukums;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getLimenis() {
+        return limenis;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    // ======================
+    // SAŅEM BOJĀJUMUS
+    // ======================
+    public void takeDamage(int dmg) {
+        int reducedDamage = defense / 4;
+        int finalDamage = dmg - reducedDamage;
+
+        if (finalDamage < 1) finalDamage = 1;
+
+        veseliba -= finalDamage;
+        if (veseliba < 0) veseliba = 0;
+
+        JOptionPane.showMessageDialog(null,
+                nosaukums + " saņēma " + finalDamage + " dmg "
+                        + "(aizsardzība -" + reducedDamage + ")\n"
+                        + "HP: " + veseliba + "/" + maxHp);
+    }
+
+    // ======================
+    // PARASTAIS UZBRUKUMS
+    // ======================
+    public int basicAttack() {
+        return uzbrukums;
+    }
+
+    // ======================
+    // ĀRSTĒŠANA
+    // ======================
+    public void heal(int amount) {
+        veseliba += amount;
+        if (veseliba > maxHp) veseliba = maxHp;
+
+        JOptionPane.showMessageDialog(null,
+                nosaukums + " atguva " + amount + " HP.\n"
+                        + "HP: " + veseliba + "/" + maxHp);
+    }
+
+    // ======================
+    // AIZSARDZĪBAS PALIELINĀŠANA
+    // ======================
+    public void boostDefense(int amount) {
+        defense += amount;
+
+        JOptionPane.showMessageDialog(null,
+                nosaukums + " palielināja aizsardzību par " + amount
+                        + ".\nDEF: " + defense);
+    }
+
+    // ======================
+    // SPECIAL ATTACK
+    // ======================
+    public abstract void specialAttack(Pokemons target);
+
+    // ======================
+    // INFORMĀCIJAS ATTĒLOŠANA
+    // ======================
+    @Override
+    public String toString() {
+        return  "Nosaukums: " + nosaukums + "\n" +
+                "Tips: " + tips + "\n" +
+                "HP: " + veseliba + "/" + maxHp + "\n" +
+                "ATK: " + uzbrukums + "\n" +
+                "DEF: " + defense + "\n" +
+                "Special: " + (specialAvailable ? "Pieejams" : "Izmantots") + "\n" +
+                "----------------------------------------";
+    }
 }

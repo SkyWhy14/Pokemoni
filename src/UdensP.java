@@ -1,39 +1,25 @@
+// WaterPokemon.java
 import javax.swing.JOptionPane;
 
-public class UdensP  extends Pokemons {
-	private int udensSpiediens;
-	//viss ar JOptionPane
+public class UdensP extends Pokemons {
 
-	public UdensP(String nosaukums, String string, int uzbrukums, int udensSpiediens) {
-		super(nosaukums, string, uzbrukums, udensSpiediens);
-		
-		this.udensSpiediens = udensSpiediens;
+    public UdensP(String nosaukums, int hp, int attack, int defense, String string) {
+		super(nosaukums, nosaukums,"Udens");
 	}
 
-	@Override
-	public void uzbrukt() {
-	JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens uzbrukumu ar spiedienu " + udensSpiediens + "!");
-	}
-	public void palelinatPretinieku() {
-		JOptionPane.showMessageDialog(null, nosaukums + " ir samazinājis pretinieka ātrumu ar ūdens plūsmu!");
-		
-	}
-	public void izvairities() {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens aizsardzību, lai izvairītos no uzbrukuma!");
-	}
-	public void dziedet(int dziedesana) {
-		veseliba += dziedesana + 5; // Ūdens pokemoni saņem papildu dziedināšanu
-		JOptionPane.showMessageDialog(null, nosaukums + " ir dziedināts par " + (dziedesana + 5) + " punktiem! Pašreizējā veselība: " + veseliba);
-	}
-	public void attistit(int attistibasLimenis) {
-		uzbrukums += attistibasLimenis * 6; // Ūdens pokemoni iegūst lielāku uzbrukuma pieaugumu
-		JOptionPane.showMessageDialog(null, nosaukums + " ir attīstījies! Pašreizējais uzbrukuma spēks: " + uzbrukums);
-	}
-
-	public void izsmidzinatUdeni(Pokemons pokemons2) {
-		JOptionPane.showMessageDialog(null, nosaukums + " izmanto ūdens smidzināšanu pret " + pokemons2.nosaukums + "!");
-		
-	}
-	
-
+    // speciālais: ūdens strūklas uzbrukums, var samazināt pretinieka attack laika posmā (šeit vienkāršoti)
+    @Override
+    public void specialAttack(Pokemons target) {
+        if (!specialAvailable) {
+            JOptionPane.showMessageDialog(null, nosaukums + " nevar izmantot speciālo — tas jau izmantots.");
+            return;
+        }
+        specialAvailable = false;
+        int dmg = (int)(uzbrukums * 1.5);
+        JOptionPane.showMessageDialog(null, nosaukums + " izmanto Ūdens strūklas uzbrukumu pret " + target.nosaukums + " un nodara " + dmg + " bojājumus!");
+        target.takeDamage(dmg);
+        // samazina pretinieka uzbrukumu īslaicīgi (vienkāršo)
+        target.uzbrukums = Math.max(1, target.uzbrukums - 2);
+        JOptionPane.showMessageDialog(null, target.nosaukums + " uzbrukums īslaicīgi samazināts par 2 punktiem.");
+    }
 }
