@@ -20,4 +20,15 @@ public class NormalaisPokemons extends Pokemons {
 
         specialAvailable = false; // reizi cīņā
     }
+
+	@Override
+	public String getAtributi() {
+		  return  "Nosaukums: " + nosaukums + "\n" +
+	                "Tips: " + tips + "\n" +
+	                "HP: " + veseliba + "/" + maxHp + "\n" +
+	                "ATK: " + uzbrukums + "\n" +
+	                "DEF: " + defense + "\n" +
+	                "Special: " + (specialAvailable ? "Pieejams" : "Izmantots") + "\n" +
+	                "----------------------------------------";
+	}
 }

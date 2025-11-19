@@ -61,6 +61,14 @@ public abstract class Pokemons {
     public int getMaxHp() {
         return maxHp;
     }
+    public boolean isSpecialAvailable() {
+		
+		if (specialAvailable) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     // ======================
     // SAŅEM BOJĀJUMUS
@@ -118,14 +126,21 @@ public abstract class Pokemons {
     // ======================
     // INFORMĀCIJAS ATTĒLOŠANA
     // ======================
-    @Override
-    public String toString() {
+    
+    
+    
+ // Atgriež objekta atribūtus kā formatētu tekstu
+    public String getAtributi() {
         return  "Nosaukums: " + nosaukums + "\n" +
                 "Tips: " + tips + "\n" +
                 "HP: " + veseliba + "/" + maxHp + "\n" +
                 "ATK: " + uzbrukums + "\n" +
                 "DEF: " + defense + "\n" +
-                "Special: " + (specialAvailable ? "Pieejams" : "Izmantots") + "\n" +
+                // Pārbauda, vai speciālais uzbrukums ir pieejams
+                "Special: " + (specialAvailable ? "Pieejams" : "Nav pieejams") + "\n" +
                 "----------------------------------------";
     }
+
+	
+	
 }

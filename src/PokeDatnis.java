@@ -84,36 +84,29 @@ public class PokeDatnis {
                 // ------------------------
                 // 2. ATRIBUTU PARĀDĪŠANA
                 // ------------------------
+                //vajag lai piemeram elektiriskie pokemoni butu atseviski no normalajiem 
                 case "Atributu aplūkošana":
-                    if (pokemoni.isEmpty()) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Nav pieejamu Pokémonu!",
-                                "Pokemoni",
-                                JOptionPane.WARNING_MESSAGE
-                        );
-                    } else {
-                        StringBuilder sb = new StringBuilder();
-                        for (Pokemons p : pokemoni) {
-                            sb.append("Nosaukums: ").append(p.nosaukums).append("\n");
-                            sb.append("Tips: ").append(p.tips).append("\n");
-                            sb.append("HP: ").append(p.veseliba).append("/").append(p.maxHp).append("\n");
-                            sb.append("ATK: ").append(p.uzbrukums).append("\n");
-                            sb.append("DEF: ").append(p.defense).append("\n");
-                            sb.append("Special: ").append(p.specialAvailable ? "Pieejams" : "Izmantots").append("\n");
-                            sb.append("--------------------------------------------------\n");
-                        }
+                   if(pokemoni.isEmpty()) {
+					   JOptionPane.showMessageDialog(null, "Nav pieejamu Pokémonu!",
+							   "Pokemoni",
+							   JOptionPane.WARNING_MESSAGE);
+				   } else {
+					   Pokemons p = (Pokemons) JOptionPane.showInputDialog(null,
+							   "Izvēlies pokemona atribūtus:", "Pokemona Atribūti",
+							   JOptionPane.QUESTION_MESSAGE, null, pokemoni.toArray(), pokemoni.get(0));
 
-                        JTextArea textArea = new JTextArea(sb.toString());
-                        textArea.setEditable(false);
-                        JScrollPane scrollPane = new JScrollPane(textArea);
-                        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-                        scrollPane.setPreferredSize(new java.awt.Dimension(400, 300));
+					   if (p != null) {
+						   JTextArea textArea = new JTextArea(p.getAtributi());
+						   textArea.setEditable(false);
+						   JScrollPane scrollPane = new JScrollPane(textArea);
+						   scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+						   scrollPane.setPreferredSize(new java.awt.Dimension(300, 200));
 
-                        JOptionPane.showMessageDialog(null, scrollPane,
-                                "Pokemoni", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    break;
+						   JOptionPane.showMessageDialog(null, scrollPane, "Pokemona Atribūti", JOptionPane.INFORMATION_MESSAGE);
+					   }
+					   break;
+				   }
+                   break;
 
                 // ------------------------
                 // 3. METOŽU IZSAUKŠANA
@@ -181,7 +174,7 @@ public class PokeDatnis {
                                 JOptionPane.WARNING_MESSAGE
                         );
                     } else {
-                   //     Metodes.saktTurniru(pokemoni);
+                       Metodes.saktTurniru(pokemoni);
                     }
                     break;
 

@@ -26,7 +26,19 @@ public class ElectriskaisP extends Pokemons {
         if (target.isAlive() && rnd.nextInt(100) < 30) {
             // 30% paralize: nākamajā raundā ai/lietotājs var netikt aktivs — šis var tikt paplašināts ar statusiem
             JOptionPane.showMessageDialog(null, target.nosaukums + " ir paralizēts (varbūtība 30%)! Nākamajā raundā var palaist gājienu.");
-            // vienkārši demonstrācija — var ieviest statusu laukā
+          
         }
     }
+
+	@Override
+	public String getAtributi() {
+		  return  "Nosaukums: " + nosaukums + "\n" +
+	                "Tips: " + tips + "\n" +
+	                "HP: " + veseliba + "/" + maxHp + "\n" +
+	                "ATK: " + uzbrukums + "\n" +
+	                "DEF: " + defense + "\n" +
+	                "Special: " + (specialAvailable ? "Pieejams" : "Izmantots") + "\n" +
+	                "----------------------------------------";
+		
+	}
 }

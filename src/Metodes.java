@@ -193,4 +193,66 @@ public class Metodes {
                         + "Uzbrukums +5\n"
                         + "Aizsardzība +2");
     }
+    public static void cinities(Pokemons p1, Pokemons p2) {
+        while (p1.isAlive() && p2.isAlive()) {
+            String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
+            String act = (String) JOptionPane.showInputDialog(null,
+                    p1.getNosaukums() + " (" + p1.getTips() + ") VS " +
+                    p2.getNosaukums() + " (" + p2.getTips() + ")\nIzvēlies gājienu:",
+                    "Cīņa", JOptionPane.QUESTION_MESSAGE,
+                    null, actions, actions[0]);
+
+            if (act == null || act.equals("Beigt cīņu")) return;
+
+            doAction(p1, p2, act);
+
+            if (!p2.isAlive()) break;
+
+            // Pretinieka gājiens (vienkāršs AI)
+            double r = Math.random();
+            if (p2.isSpecialAvailable() && r < 0.3)
+                doAction(p2, p1, "Speciālais");
+            else
+                doAction(p2, p1, "Uzbrukt");
+        }
+
+        JOptionPane.showMessageDialog(null,
+                "Uzvarētājs: " + (p1.isAlive() ? p1.getNosaukums() : p2.getNosaukums()));
+    }
+
+    public static void saktTurniru(ArrayList<Pokemons> pokemoni) {
+        // Validācijas pārbaudes
+        if (pokemoni.size() < 2) {
+            JOptionPane.showMessageDialog(null, "Turnīram nepieciešami vismaz 2 pokemoni!");
+            return;
+        } else if (pokemoni.size() % 2 != 0) {
+            JOptionPane.showMessageDialog(null, "Turnīram nepieciešams pāra skaits pokemonu!");
+            return;
+        } else if (pokemoni.size() > 8) {
+            JOptionPane.showMessageDialog(null, "Turnīram var piedalīties ne vairāk kā 8 pokemoni!");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, "Turnīrs sākas! Kopā " + pokemoni.size() + " pokemoni.");
+
+        // Cīņu pāri
+        for (int i = 0; i < pokemoni.size(); i += 2) {
+            Pokemons p1 = pokemoni.get(i);
+            Pokemons p2 = pokemoni.get(i + 1);
+
+            String pairInfo = "Cīņa starp:\n" +
+                              p1.getNosaukums() + " (" + p1.getTips() + ") VS " +
+                              p2.getNosaukums() + " (" + p2.getTips() + ")";
+            JOptionPane.showMessageDialog(null, pairInfo, "Turnīra Cīņa", JOptionPane.INFORMATION_MESSAGE);
+
+            // Lietotājs cīnās ar pirmajiem pokemoniem
+           cinities(p1, p2); // Šeit tiek izmantota Tava interaktīvā cīņas metode
+        }
+
+        JOptionPane.showMessageDialog(null, "Turnīrs ir noslēdzies!");
+    }
+
+
+	
+	
 }
