@@ -186,6 +186,8 @@ public class Metodes {
         p.heal(healAmount);
         p.uzbrukums += 5;
         p.defense += 2;
+        p.limenis += 1;
+        p.veseliba+= 10;
 
         JOptionPane.showMessageDialog(null,
                 p.getNosaukums() + " līmenis paaugstināts!\n"

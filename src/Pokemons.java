@@ -132,7 +132,7 @@ public abstract class Pokemons {
  // Atgriež objekta atribūtus kā formatētu tekstu
     public String getAtributi() {
         return  "Nosaukums: " + nosaukums + "\n" +
-                "Tips: " + tips + "\n" +
+                
                 "HP: " + veseliba + "/" + maxHp + "\n" +
                 "ATK: " + uzbrukums + "\n" +
                 "DEF: " + defense + "\n" +
