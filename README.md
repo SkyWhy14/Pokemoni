@@ -14,6 +14,8 @@
 - [X] Izveidota iespeja pokemonu ciņa
 - [X] Izveidota iespeja veikt pokemon turnīru
 - [X] Pievienotas interaktivas pogas
+- [X] Ir sound effecti
+- [X] Ir izveidots ka darbojas special uzbrukumi
       
 
 
