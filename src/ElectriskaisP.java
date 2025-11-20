@@ -26,6 +26,7 @@ public class ElectriskaisP extends Pokemons {
         if (target.isAlive() && rnd.nextInt(100) < 30) {
             // 30% paralize: nākamajā raundā ai/lietotājs var netikt aktivs — šis var tikt paplašināts ar statusiem
             JOptionPane.showMessageDialog(null, target.nosaukums + " ir paralizēts (varbūtība 30%)! Nākamajā raundā var palaist gājienu.");
+            
           
         }
     }

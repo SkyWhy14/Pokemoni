@@ -98,6 +98,47 @@ public class Metodes {
 
         return p;
     }
+    public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
+        if (pokemoni.size() < 2) {
+            JOptionPane.showMessageDialog(null, "Nepietiek pokemonu!");
+            return;
+        }
+
+        Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
+
+        Pokemons p1 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Pirmais pokemons:", "Cīņa",
+                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[0]);
+
+        Pokemons p2 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Otrais pokemons:", "Cīņa",
+                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[1]);
+
+        if (p1 == null || p2 == null || p1 == p2) return;
+
+        while (p1.isAlive() && p2.isAlive()) {
+            String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
+            String act = (String) JOptionPane.showInputDialog(null,
+                    p1 + "\nVS\n" + p2 + "\nIzvēlies gājienu:",
+                    "Cīņa", JOptionPane.QUESTION_MESSAGE,
+                    null, actions, actions[0]);
+
+            if (act == null || act.equals("Beigt cīņu")) return;
+
+            doAction(p1, p2, act);
+
+            if (!p2.isAlive()) break;
+
+            double r = Math.random();
+            if (p2.specialAvailable && r < 0.3)
+                doAction(p2, p1, "Speciālais");
+            else
+                doAction(p2, p1, "Uzbrukt");
+        }
+
+        JOptionPane.showMessageDialog(null,
+                "Uzvarētājs: " + (p1.isAlive() ? p1 : p2));
+    }
 
     
 
@@ -116,6 +157,7 @@ public class Metodes {
                 JOptionPane.showMessageDialog(null, "Nezināma darbība.");
         }
     }
+    
 
     public static void Dziedeties(Pokemons p) {
         int healAmount = SkaitlaParbaude(

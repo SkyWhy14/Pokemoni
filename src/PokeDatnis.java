@@ -145,7 +145,7 @@ public class PokeDatnis {
                             if (metode != null) {
                                 switch (metode) {
                                     case "Cinities ar citu pokemonu":
-                                       Metodes.cinities(p, p);
+                                        Metodes.CinitiesArCituPokemonu(pokemoni);
                                         break;
                                     case "Dziedeties":
                                         Metodes.Dziedeties(p);
