@@ -16,21 +16,19 @@ public abstract class Pokemons {
     protected static final int BASIC_DEFENSE = 10;
     protected static final int BASIC_LEVEL = 1;
 
-    public Pokemons(String nosaukums, String tips, String string) {
+    public Pokemons(String nosaukums, String tips, int hp, int attack, int defense) {
         this.nosaukums = nosaukums;
         this.tips = tips;
-
-        // Uzstāda basic vērtības
-        this.maxHp = BASIC_HP;
-        this.veseliba = BASIC_HP;
-        this.uzbrukums = BASIC_ATTACK;
-        this.defense = BASIC_DEFENSE;
-        this.limenis = BASIC_LEVEL;
-
+        this.veseliba = hp;
+        this.uzbrukums = attack;
+        this.defense = defense;
         this.specialAvailable = true;
+        this.limenis = BASIC_LEVEL;
     }
 
-    public boolean isAlive() {
+    
+
+	public boolean isAlive() {
         return veseliba > 0;
     }
 
@@ -136,6 +134,8 @@ public abstract class Pokemons {
                 "HP: " + veseliba + "/" + maxHp + "\n" +
                 "ATK: " + uzbrukums + "\n" +
                 "DEF: " + defense + "\n" +
+                "Tips: " + tips + "\n" +
+                "Līmenis: " + limenis + "\n" +
                 // Pārbauda, vai speciālais uzbrukums ir pieejams
                 "Special: " + (specialAvailable ? "Pieejams" : "Nav pieejams") + "\n" +
                 "----------------------------------------";

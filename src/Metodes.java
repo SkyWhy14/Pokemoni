@@ -55,18 +55,14 @@ public class Metodes {
     // IZVEIDO POKEMONU AR BASIC VĒRTĪBĀM
     public static Pokemons izveidotPokemonu() {
 
-        // TIPU SARAKSTS
         ArrayList<String> tipi = new ArrayList<>();
         tipi.add("Elektriskais");
         tipi.add("Ūdens");
         tipi.add("Parastais");
 
-        // Nosaukuma ievade
-        String nosaukums = virknesParbaude(
-                "Ievadi Pokemona nosaukumu:", "Pikachu");
-        if (nosaukums == null) return null;
+        String nosaukums = virknesParbaude("Ievadi Pokemona nosaukumu:", "Pikachu");
+        if (nosaukums == null || nosaukums.isEmpty()) return null;
 
-        // Tipa izvēle
         String tips = (String) JOptionPane.showInputDialog(
                 null,
                 "Izvēlies Pokemona tipu:",
@@ -78,84 +74,32 @@ public class Metodes {
         );
         if (tips == null) return null;
 
-        Pokemons p = null;
-
-        switch (tips) {
-            case "Elektriskais":
-                p = new ElectriskaisP(
-                        nosaukums,
-                        Pokemons.BASIC_HP,
-                        Pokemons.BASIC_ATTACK,
-                        Pokemons.BASIC_DEFENSE,
-                        "Elektriskais"
-                );
-                break;
-
-            case "Ūdens":
-                p = new UdensP(
-                        nosaukums,
-                        Pokemons.BASIC_HP,
-                        Pokemons.BASIC_ATTACK,
-                        Pokemons.BASIC_DEFENSE,
-                        "Ūdens"
-                );
-                break;
-
-            case "Parastais":
-                p = new NormalaisPokemons(
-                        nosaukums,
-                        Pokemons.BASIC_HP,
-                        Pokemons.BASIC_ATTACK,
-                        Pokemons.BASIC_DEFENSE,
-                        "Parastais"
-                );
-                break;
-        }
+        Pokemons p = switch (tips) {
+            case "Elektriskais" -> new ElectriskaisP(
+                    nosaukums,
+                    Pokemons.BASIC_HP,
+                    Pokemons.BASIC_ATTACK,
+                    Pokemons.BASIC_DEFENSE
+            );
+            case "Ūdens" -> new UdensP(
+                    nosaukums,
+                    Pokemons.BASIC_HP,
+                    Pokemons.BASIC_ATTACK,
+                    Pokemons.BASIC_DEFENSE
+            );
+            case "Parastais" -> new NormalaisPokemons(
+                    nosaukums,
+                    Pokemons.BASIC_HP,
+                    Pokemons.BASIC_ATTACK,
+                    Pokemons.BASIC_DEFENSE
+            );
+            default -> null;
+        };
 
         return p;
     }
 
-    public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
-        if (pokemoni.size() < 2) {
-            JOptionPane.showMessageDialog(null, "Nepietiek pokemonu!");
-            return;
-        }
-
-        Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
-
-        Pokemons p1 = (Pokemons) JOptionPane.showInputDialog(null,
-                "Pirmais pokemons:", "Cīņa",
-                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[0]);
-
-        Pokemons p2 = (Pokemons) JOptionPane.showInputDialog(null,
-                "Otrais pokemons:", "Cīņa",
-                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[1]);
-
-        if (p1 == null || p2 == null || p1 == p2) return;
-
-        while (p1.isAlive() && p2.isAlive()) {
-            String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
-            String act = (String) JOptionPane.showInputDialog(null,
-                    p1 + "\nVS\n" + p2 + "\nIzvēlies gājienu:",
-                    "Cīņa", JOptionPane.QUESTION_MESSAGE,
-                    null, actions, actions[0]);
-
-            if (act == null || act.equals("Beigt cīņu")) return;
-
-            doAction(p1, p2, act);
-
-            if (!p2.isAlive()) break;
-
-            double r = Math.random();
-            if (p2.specialAvailable && r < 0.3)
-                doAction(p2, p1, "Speciālais");
-            else
-                doAction(p2, p1, "Uzbrukt");
-        }
-
-        JOptionPane.showMessageDialog(null,
-                "Uzvarētājs: " + (p1.isAlive() ? p1 : p2));
-    }
+    
 
     private static void doAction(Pokemons actor, Pokemons target, String act) {
         switch (act) {

@@ -7,9 +7,9 @@ public class UdensP extends Pokemons {
 
 	private Random rnd = new Random();
 
-   public UdensP(String nosaukums, int hp, int attack, int defense, String string) {
-		super(nosaukums, nosaukums,"Ūdens");
-	}
+	public UdensP(String nosaukums, int hp, int attack, int defense) {
+        super(nosaukums, "Ūdens", hp, attack, defense);
+    }
 
     // speciālais uzbrukums: var paralizēt pretinieku (ar varbūtību)
     @Override
@@ -30,15 +30,6 @@ public class UdensP extends Pokemons {
         }
     }
 
-	@Override
-	public String getAtributi() {
-		  return  "Nosaukums: " + nosaukums + "\n" +
-	                
-	                "HP: " + veseliba + "/" + maxHp + "\n" +
-	                "ATK: " + uzbrukums + "\n" +
-	                "DEF: " + defense + "\n" +
-	                "Special: " + (specialAvailable ? "Pieejams" : "Izmantots") + "\n" +
-	                "----------------------------------------";
-		
-	}
+	
+	
 }

@@ -1,4 +1,10 @@
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -138,7 +144,7 @@ public class PokeDatnis {
                             if (metode != null) {
                                 switch (metode) {
                                     case "Cinities ar citu pokemonu":
-                                        Metodes.CinitiesArCituPokemonu(pokemoni);
+                                       Metodes.cinities(p, p);
                                         break;
                                     case "Dziedeties":
                                         Metodes.Dziedeties(p);
@@ -188,8 +194,26 @@ public class PokeDatnis {
                             "Pokemoni",
                             JOptionPane.INFORMATION_MESSAGE
                     );
-                    return; // Iziet no programmas
+
+                    try {
+                        File soundFile = new File(".//audio//abra.wav");
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioInputStream);
+                        clip.start();
+
+                       
+                        Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                        clip.close();
+                    } catch (Exception e) {
+                      
+                        e.printStackTrace();
+                    }
+                    break;
             }
-        } while (true);
+        }while(!izvele.equals("Aizvērt programmu"));
     }
 }
+            
+    
