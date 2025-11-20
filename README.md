@@ -12,6 +12,7 @@
 - [X] Izveidota iespeja attistit pokemonu
 - [X] Izveidota iespeja pokemonu ciņa
 - [X] Izveidota iespeja veikt pokemon turnīru
+- [X] Pievienotas interaktivas pogas
       
 
 
