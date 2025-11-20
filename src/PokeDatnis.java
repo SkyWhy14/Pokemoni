@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -70,7 +69,7 @@ public class PokeDatnis {
 
                 if (jauns != null) {
                     pokemoni.add(jauns);
-                    try {
+                    try {	//Audio izvade jauno pokemonu izveidē
                         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
                                 new File("./audio/pokemon-catch.wav"));
 
@@ -255,12 +254,14 @@ public class PokeDatnis {
         }while(!izvele.equals("Aizvērt programmu"));
     }
     
-    
+    // ------------------------
+    // 6. SĀKUMA EKRĀNA IZVEIDE
+    // ------------------------
     
     public static void main(String[] args) {
     	
     	 try {
-             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(  //Atskaņo sākumekrāna skaņu atverot spēli
                      new File(".//audio//pokemon-go.wav"));
              Clip clip = AudioSystem.getClip();
              clip.open(audioInputStream);
@@ -306,133 +307,3 @@ public class PokeDatnis {
 
     }
 }
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-    
-
-            
-    

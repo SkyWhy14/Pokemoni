@@ -2,12 +2,12 @@ import javax.swing.JOptionPane;
 
 public class NormalaisPokemons extends Pokemons {
 
-	public NormalaisPokemons(String nosaukums, int hp, int attack, int defense) {
+	public NormalaisPokemons(String nosaukums, int hp, int attack, int defense) { //Parasto pokemonu atrabūtu noteikšana
         super(nosaukums, "Parastais", hp, attack, defense);
     }
 
     @Override
-    public void specialAttack(Pokemons target) {
+    public void specialAttack(Pokemons target) { //Īpašo uzbrukumu metodes izsaukšana un pārbaude
         if (!specialAvailable) {
             JOptionPane.showMessageDialog(null, nosaukums + " īpašā uzbrukuma izmantošana nav pieejama!");
             return;

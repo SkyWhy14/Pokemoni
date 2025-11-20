@@ -83,7 +83,7 @@ public abstract class Pokemons {
 	}
 
     // ======================
-    // SAŅEM BOJĀJUMUS
+    // DZĪVĪBU ATŅEMŠANA
     // ======================
     public void takeDamage(int dmg) {
         int reducedDamage = defense / 4;
@@ -108,7 +108,7 @@ public abstract class Pokemons {
     }
 
     // ======================
-    // ĀRSTĒŠANA
+    // ĀRSTĒŠANA/DZIEDĒŠANA
     // ======================
     public void heal(int amount) {
         veseliba += amount;
