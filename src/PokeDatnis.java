@@ -266,7 +266,7 @@ public class PokeDatnis {
              exitButton.addActionListener(e -> System.exit(0));
 
              startButton.addActionListener(e -> {
-                 if (clip != null && clip.isRunning()) clip.stop();  // 🔥 stop music here
+                 if (clip != null && clip.isRunning()) clip.stop();  //Apstādina mūziku uz start pogas nospiešanu
                  frame.dispose();
                  PokeDatnis app = new PokeDatnis();
                  app.sakums();
