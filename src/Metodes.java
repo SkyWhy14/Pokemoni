@@ -239,7 +239,6 @@ public class Metodes {
             Pokemons p1 = pokemoni.get(i);
             Pokemons p2 = pokemoni.get(i + 1);
             
-            ImageIcon img = new ImageIcon(".//images//pokemon-img.gif");
             String pairInfo = "Cīņa starp:\n" +
                               p1.getNosaukums() + " (" + p1.getTips() + ") VS " +
                               p2.getNosaukums() + " (" + p2.getTips() + ")";
