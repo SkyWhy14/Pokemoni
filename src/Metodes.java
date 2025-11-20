@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
-
+//ar jLabel un pogam
     public static void paradiPokemonPasauliArSkanu() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(

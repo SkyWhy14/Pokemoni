@@ -5,6 +5,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -12,9 +15,7 @@ import javax.swing.ScrollPaneConstants;
 
 public class PokeDatnis {
 
-    public static void main(String[] args) {
-        new PokeDatnis().sakums();
-    }
+    
 
     public void sakums() {
 
@@ -214,6 +215,50 @@ public class PokeDatnis {
             }
         }while(!izvele.equals("Aizvērt programmu"));
     }
+    
+    
+    
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Pokémon spēle");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(null); // ļauj izmantot setBounds
+
+        // Ieliek GIF fonā
+        ImageIcon img = new ImageIcon(".//images//pokeball-shimmer.gif");
+        JLabel background = new JLabel(img);
+        background.setBounds(0, 0, 400, 300);
+        frame.add(background);
+
+        // Sākuma poga
+        JButton startButton = new JButton("Sākt spēli");
+        startButton.setBounds(50, 200, 120, 40); // x=50, y=200
+        background.add(startButton); // pievieno pogu uz fona
+
+        // Iziet poga
+        JButton exitButton = new JButton("Iziet");
+        exitButton.setBounds(230, 200, 120, 40); // x=230, y=200
+        background.add(exitButton); // pievieno pogu uz fona
+
+        exitButton.addActionListener(e -> System.exit(0));
+
+        startButton.addActionListener(e -> {
+            frame.dispose(); // aizver sākuma logu
+            PokeDatnis app = new PokeDatnis();
+            app.sakums();  // sāk spēli tikai pēc Start pogas
+        });
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 }
+    
+    
+    
+    
+    
+    
+    
+
             
     
