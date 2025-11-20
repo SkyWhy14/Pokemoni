@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
-
+	    
     public static void paradiPokemonPasauliArSkanu() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -103,9 +103,23 @@ public class Metodes {
 
     private static void doAction(Pokemons actor, Pokemons target, String act) {
         switch (act) {
-            case "Uzbrukt":
-                target.takeDamage(actor.basicAttack());
-                break;
+        case "Uzbrukt":
+
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                        new File("./audio/abra.wav"));
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            target.takeDamage(actor.basicAttack());
+            break;
+            
             case "Speciālais":
                 actor.specialAttack(target);
                 break;
@@ -126,6 +140,7 @@ public class Metodes {
     }
 
     public static void AttistitLimeni(Pokemons p) {
+    	
         int healAmount = p.getMaxHp() - p.getVeseliba();
         p.heal(healAmount);
         p.uzbrukums += 5;
@@ -134,6 +149,7 @@ public class Metodes {
         p.veseliba+= 10;
 
         JOptionPane.showMessageDialog(null,
+        		
                 p.getNosaukums() + " līmenis paaugstināts!\n"
                         + "HP pilns.\n"
                         + "Uzbrukums +5\n"
@@ -202,3 +218,4 @@ public class Metodes {
 	
 	
 }
+	
