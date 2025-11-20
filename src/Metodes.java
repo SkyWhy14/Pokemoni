@@ -138,6 +138,18 @@ public class Metodes {
         );
         if (healAmount != -1) {
         	
+        	try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                        new File("./audio/pokemon-heal.wav"));
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        	
         	p.heal(healAmount);
         }
     }
@@ -151,6 +163,18 @@ public class Metodes {
         p.limenis += 1;
         p.veseliba+= 10;
 
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-evolve.wav"));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         JOptionPane.showMessageDialog(null,
         		
                 p.getNosaukums() + " līmenis paaugstināts!\n"
@@ -214,10 +238,14 @@ public class Metodes {
         for (int i = 0; i < pokemoni.size(); i += 2) {
             Pokemons p1 = pokemoni.get(i);
             Pokemons p2 = pokemoni.get(i + 1);
-
+            
+            ImageIcon img = new ImageIcon(".//images//pokemon-img.gif");
             String pairInfo = "Cīņa starp:\n" +
                               p1.getNosaukums() + " (" + p1.getTips() + ") VS " +
                               p2.getNosaukums() + " (" + p2.getTips() + ")";
+            
+            
+            
             JOptionPane.showMessageDialog(null, pairInfo, "Turnīra Cīņa", JOptionPane.INFORMATION_MESSAGE);
 
             // Lietotājs cīnās ar pirmajiem pokemoniem
