@@ -79,112 +79,174 @@ public class Metodes {
 
         return p;
     }
+    
     public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
-        if (pokemoni.size() < 2) {
-            JOptionPane.showMessageDialog(null, "Nepietiek pokemonu!");
-            return;
-        }
+        if (pokemoni.size() < 2) return;
 
         Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
 
-        Pokemons p1 = (Pokemons) JOptionPane.showInputDialog(null,
-                "Pirmais pokemons:", "Cīņa",
+        Pokemons speletajs1 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Spēlētājs 1: Izvēlies savu pokemonu:", "Cīņa",
                 JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[0]);
+        if (speletajs1 == null) return;
 
-        Pokemons p2 = (Pokemons) JOptionPane.showInputDialog(null,
-                "Otrais pokemons:", "Cīņa",
-                JOptionPane.QUESTION_MESSAGE, null, pokArray, pokArray[1]);
+        ArrayList<Pokemons> pretinieki = new ArrayList<>();
+        for (Pokemons p : pokemoni) if (!p.equals(speletajs1)) pretinieki.add(p);
+        Pokemons[] pretArray = pretinieki.toArray(new Pokemons[0]);
 
-        if (p1 == null || p2 == null || p1 == p2) return;
+        Pokemons speletajs2 = (Pokemons) JOptionPane.showInputDialog(null,
+                "Spēlētājs 2: Izvēlies savu pokemonu:", "Cīņa",
+                JOptionPane.QUESTION_MESSAGE, null, pretArray, pretArray[0]);
+        if (speletajs2 == null) return;
 
-        while (p1.isAlive() && p2.isAlive()) {
-            String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
-            String act = (String) JOptionPane.showInputDialog(null,
-                    p1 + "\nVS\n" + p2 + "\nIzvēlies gājienu:",
-                    "Cīņa", JOptionPane.QUESTION_MESSAGE,
-                    null, actions, actions[0]);
+        String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
 
-            if (act == null || act.equals("Beigt cīņu")) return;
+        while (speletajs1.isAlive() && speletajs2.isAlive()) {
 
-            doAction(p1, p2, act);
+            // --- Spēlētājs 1 ---
+            if (!speletajs1.isParalizets()) {
+                String act1 = (String) JOptionPane.showInputDialog(null,
+                        "Spēlētājs 1 (" + speletajs1.getNosaukums() + ") izvēlies gājienu:",
+                        "Cīņa", JOptionPane.QUESTION_MESSAGE, null, actions, actions[0]);
+                if (act1 == null || act1.equals("Beigt cīņu")) return;
 
-            if (!p2.isAlive()) break;
+                doAction(speletajs1, speletajs2, act1);
+            } else {
+                speletajs1.setParalizets(false);
+            }
 
-            double r = Math.random();
-            if (p2.specialAvailable && r < 0.3)
-                doAction(p2, p1, "Speciālais");
-            else
-                doAction(p2, p1, "Uzbrukt");
+            if (!speletajs2.isAlive()) break;
+
+            // --- Spēlētājs 2 ---
+            if (!speletajs2.isParalizets()) {
+                String act2 = (String) JOptionPane.showInputDialog(null,
+                        "Spēlētājs 2 (" + speletajs2.getNosaukums() + ") izvēlies gājienu:",
+                        "Cīņa", JOptionPane.QUESTION_MESSAGE, null, actions, actions[0]);
+                if (act2 == null || act2.equals("Beigt cīņu")) return;
+
+                doAction(speletajs2, speletajs1, act2);
+            } else {
+                speletajs2.setParalizets(false);
+            }
         }
 
-        JOptionPane.showMessageDialog(null,
-                "Uzvarētājs: " + (p1.isAlive() ? p1 : p2));
+        Pokemons uzvaretajs = speletajs1.isAlive() ? speletajs1 : speletajs2;
+        System.out.println("Uzvarētājs: " + uzvaretajs.getNosaukums());
     }
+
+       
 
     
 
     private static void doAction(Pokemons actor, Pokemons target, String act) {
         switch (act) {
-        case "Uzbrukt":
+            case "Uzbrukt":
+                // Atskaņo skaņu
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                            new File("./audio/abra.wav"));
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                        new File("./audio/abra.wav"));
+                // Uzbrukuma izpilde
+                int dmg = actor.basicAttack();
+                if (target.isWeakened()) dmg = (int)(dmg * 0.8); // ja pretinieks pavajināts
+                target.takeDamage(dmg);
+                break;
 
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            target.takeDamage(actor.basicAttack());
-            break;
-            
             case "Speciālais":
                 actor.specialAttack(target);
                 break;
+
             case "Aizsardzība +":
                 actor.boostDefense(3);
                 break;
+
             default:
-                JOptionPane.showMessageDialog(null, "Nezināma darbība.");
+                System.out.println("Nezināma darbība: " + act);
         }
     }
-    
+    //izvelas kuru pokmonu dziedet staro tiem pokemoniem kuri ir dzive
+    public static void Dziedeties(ArrayList<Pokemons> pokemoni) {
+        ArrayList<Pokemons> dziviPokemoni = new ArrayList<>();
 
-    public static void Dziedeties(Pokemons p) {
-        int healAmount = SkaitlaParbaude(
-                "Cik HP atgūt (1–" + (p.getMaxHp() - p.getVeseliba()) + ")?",
-                "10", p.getMaxHp() - p.getVeseliba(), 1
-        );
-        if (healAmount != -1) {
-        	
-        	try {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                        new File("./audio/pokemon-heal.wav"));
-
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        for (Pokemons pk : pokemoni) {
+            if (pk.isAlive()) {
+                dziviPokemoni.add(pk);
             }
-        	
-        	p.heal(healAmount);
+        }
+
+        if (dziviPokemoni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nav dzīvu Pokémonu!");
+            return;
+        }
+
+        Pokemons[] arr = dziviPokemoni.toArray(new Pokemons[0]);
+
+        Pokemons izvele = (Pokemons) JOptionPane.showInputDialog(
+                null,
+                "Izvēlies kuru pokemonu dziedēt:",
+                "Dziedēšana",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                arr,
+                arr[0]
+        );
+
+        if (izvele == null) return;
+
+        int trukst = izvele.getMaxHp() - izvele.getVeseliba();
+
+        if (trukst <= 0) {
+            JOptionPane.showMessageDialog(null,
+                    izvele.nosaukums + " jau ir pilnībā sadziedēts!");
+            return;
+        }
+
+        int healAmount = SkaitlaParbaude(
+                "Ievadi HP daudzumu (1 - " + trukst + "):",
+                "1",
+                trukst,
+                1
+        );
+
+        if (healAmount != -1) {
+            izvele.heal(healAmount);
+            JOptionPane.showMessageDialog(null,
+                    izvele.nosaukums + " tika dziedēts par " + healAmount + " HP!");
         }
     }
 
-    public static void AttistitLimeni(Pokemons p) {
-    	
-        int healAmount = p.getMaxHp() - p.getVeseliba();
-        p.heal(healAmount);
+    public static void AttistitLimeni(ArrayList<Pokemons> pokemoni) {
+        if (pokemoni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nav pieejamu Pokémonu!");
+            return;
+        }
+
+        Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
+
+        Pokemons p = (Pokemons) JOptionPane.showInputDialog(
+                null,
+                "Izvēlies, kuru Pokémonu attīstīt:",
+                "Attīstīšana",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                pokArray,
+                pokArray[0]
+        );
+
+        if (p == null) return;
+
+        // Stat uzlabojumi
+        p.heal(p.getMaxHp() - p.getVeseliba());
         p.uzbrukums += 5;
         p.defense += 2;
         p.limenis += 1;
-        p.veseliba+= 10;
+        p.veseliba += 10;
 
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -197,11 +259,11 @@ public class Metodes {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         JOptionPane.showMessageDialog(null,
-        		
-                p.getNosaukums() + " līmenis paaugstināts!\n"
-                        + "HP pilns.\n"
+                p.getNosaukums() + " attīstījās!\n"
+                        + "Līmenis: " + p.limenis + "\n"
+                        + "HP pilns\n"
                         + "Uzbrukums +5\n"
                         + "Aizsardzība +2");
     }
