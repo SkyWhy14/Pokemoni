@@ -6,30 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
-<<<<<<< HEAD
-//ar jLabel un pogam
-=======
 
->>>>>>> 5cee519b5ca8119ac4fa485d3f9b494ee73648a6
-    public static void paradiPokemonPasauliArSkanu() {
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                    new File(".//audio//pokemon-go.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-
-            ImageIcon img = new ImageIcon(".//images//pokemon.gif");
-
-            JOptionPane.showMessageDialog(null, "", "Pokemon pasaule",
-                    JOptionPane.INFORMATION_MESSAGE, img);
-
-            clip.stop();
-            clip.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//ar jLabel un pogama
 
     public static String virknesParbaude(String zinojums, String noklusejums) {
         String virkne;

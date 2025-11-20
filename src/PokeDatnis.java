@@ -3,19 +3,10 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 5cee519b5ca8119ac4fa485d3f9b494ee73648a6
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-<<<<<<< HEAD
-=======
-
->>>>>>> 5cee519b5ca8119ac4fa485d3f9b494ee73648a6
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,8 +25,7 @@ public class PokeDatnis {
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        // Fona animācija/skaņa (ja eksistē)
-        Metodes.paradiPokemonPasauliArSkanu();
+       
 
         String[] darbibas = {
                 "Izveidot jaunu Pokemonu",
@@ -244,37 +234,52 @@ public class PokeDatnis {
     
     
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Pokémon spēle");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(null); // ļauj izmantot setBounds
+    	
+    	 try {
+             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                     new File(".//audio//pokemon-go.wav"));
+             Clip clip = AudioSystem.getClip();
+             clip.open(audioInputStream);
+             clip.start(); 
 
-        // Ieliek GIF fonā
-        ImageIcon img = new ImageIcon(".//images//pokeball-shimmer.gif");
-        JLabel background = new JLabel(img);
-        background.setBounds(0, 0, 400, 300);
-        frame.add(background);
+             JFrame frame = new JFrame("Pokémon spēle");
+             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+             frame.setSize(400, 300);
+             frame.setLayout(null); // ļauj izmantot setBounds
 
-        // Sākuma poga
-        JButton startButton = new JButton("Sākt spēli");
-        startButton.setBounds(50, 200, 120, 40); // x=50, y=200
-        background.add(startButton); // pievieno pogu uz fona
+             // Ieliek GIF fonā
+             ImageIcon img = new ImageIcon(".//images//pokeball-shimmer.gif");
+             JLabel background = new JLabel(img);
+             background.setBounds(0, 0, 400, 300);
+             frame.add(background);
 
-        // Iziet poga
-        JButton exitButton = new JButton("Iziet");
-        exitButton.setBounds(230, 200, 120, 40); // x=230, y=200
-        background.add(exitButton); // pievieno pogu uz fona
+             // Sākuma poga
+             JButton startButton = new JButton("Sākt spēli");
+             startButton.setBounds(50, 200, 120, 40); // x=50, y=200
+             background.add(startButton); // pievieno pogu uz fona
 
-        exitButton.addActionListener(e -> System.exit(0));
+             // Iziet poga
+             JButton exitButton = new JButton("Iziet");
+             exitButton.setBounds(230, 200, 120, 40); // x=230, y=200
+             background.add(exitButton); // pievieno pogu uz fona
 
-        startButton.addActionListener(e -> {
-            frame.dispose(); // aizver sākuma logu
-            PokeDatnis app = new PokeDatnis();
-            app.sakums();  // sāk spēli tikai pēc Start pogas
-        });
+             exitButton.addActionListener(e -> System.exit(0));
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+             startButton.addActionListener(e -> {
+                 if (clip != null && clip.isRunning()) clip.stop();  // 🔥 stop music here
+                 frame.dispose();
+                 PokeDatnis app = new PokeDatnis();
+                 app.sakums();
+             });
+
+             frame.setLocationRelativeTo(null);
+             frame.setVisible(true);
+             
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+    	
+
     }
 }
     
@@ -283,6 +288,126 @@ public class PokeDatnis {
     
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
     
 
             
