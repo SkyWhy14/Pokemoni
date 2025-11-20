@@ -34,10 +34,10 @@ public class PokeDatnis {
                 "Aizvērt programmu"
         };
         String[] metodes = {
-                "Cinities ar citu pokemonu",
-                "Dziedeties",
-                "Attistities",
-                "Atpakal"
+                "Cīnities ar citu pokemonu",
+                "Dziedēties",
+                "Attēstēties",
+                "Atpakaļ"
         };
 
         ArrayList<Pokemons> pokemoni = new ArrayList<>();
@@ -153,7 +153,7 @@ public class PokeDatnis {
 
                             if (metode != null) {
                                 switch (metode) {
-                                    case "Cinities ar citu pokemonu":
+                                    case "Cīnities ar citu pokemonu":
                                        Metodes.cinities(p, p);
                                         break;
                                     case "Dziedēties":

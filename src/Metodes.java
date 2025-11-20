@@ -136,7 +136,10 @@ public class Metodes {
                 "Cik HP atgūt (1–" + (p.getMaxHp() - p.getVeseliba()) + ")?",
                 "10", p.getMaxHp() - p.getVeseliba(), 1
         );
-        if (healAmount != -1) p.heal(healAmount);
+        if (healAmount != -1) {
+        	
+        	p.heal(healAmount);
+        }
     }
 
     public static void AttistitLimeni(Pokemons p) {
@@ -177,7 +180,17 @@ public class Metodes {
             else
                 doAction(p2, p1, "Uzbrukt");
         }
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-catch.wav"));
 
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JOptionPane.showMessageDialog(null,
                 "Uzvarētājs: " + (p1.isAlive() ? p1.getNosaukums() : p2.getNosaukums()));
     }
