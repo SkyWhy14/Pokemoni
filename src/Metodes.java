@@ -82,7 +82,17 @@ public class Metodes {
     
     public static void CinitiesArCituPokemonu(ArrayList<Pokemons> pokemoni) {
         if (pokemoni.size() < 2) return;
-
+        
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-battle.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         Pokemons[] pokArray = pokemoni.toArray(new Pokemons[0]);
 
         Pokemons speletajs1 = (Pokemons) JOptionPane.showInputDialog(null,
@@ -159,6 +169,17 @@ public class Metodes {
                 break;
 
             case "Speciālais":
+            	
+            	 try {
+                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                             new File("./audio/pokemon-critical.wav"));
+                     Clip clip = AudioSystem.getClip();
+                     clip.open(audioInputStream);
+                     clip.start();
+                 } catch (Exception e) {
+                     e.printStackTrace();
+                 }
+            	
                 actor.specialAttack(target);
                 break;
 
@@ -316,7 +337,17 @@ public class Metodes {
             JOptionPane.showMessageDialog(null, "Turnīram var piedalīties ne vairāk kā 8 pokemoni!");
             return;
         }
-
+        
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-battle.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         JOptionPane.showMessageDialog(null, "Turnīrs sākas! Kopā " + pokemoni.size() + " pokemoni.");
 
         // Cīņu pāri

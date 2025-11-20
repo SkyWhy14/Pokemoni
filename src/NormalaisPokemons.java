@@ -12,11 +12,13 @@ public class NormalaisPokemons extends Pokemons {
             JOptionPane.showMessageDialog(null, nosaukums + " īpašā uzbrukuma izmantošana nav pieejama!");
             return;
         }
-
+        
+        
+        
         int dmg = uzbrukums * 2;
         JOptionPane.showMessageDialog(null, nosaukums + " izmantoja ĪPAŠO UZBRUKUMU un nodara " + dmg + " zaudējumu!");
         target.takeDamage(dmg);
-
+        
         specialAvailable = false; // reizi cīņā
     }
 
