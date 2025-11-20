@@ -1,6 +1,7 @@
 // ElectricPokemon.java
-import javax.swing.JOptionPane;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 public class UdensP extends Pokemons {
     
@@ -25,7 +26,8 @@ public class UdensP extends Pokemons {
         // paralīzes iespēja:
         if (target.isAlive() && rnd.nextInt(100) < 30) {
             // 30% paralize: nākamajā raundā ai/lietotājs var netikt aktivs — šis var tikt paplašināts ar statusiem
-            JOptionPane.showMessageDialog(null, target.nosaukums + " ir paralizēts (varbūtība 30%)! Nākamajā raundā var palaist gājienu.");
+            JOptionPane.showMessageDialog(null, target.nosaukums + " ir vajaks (varbūtība 30%)! Nākamajā raundā var mazaks dmg.");
+            
           
         }
     }

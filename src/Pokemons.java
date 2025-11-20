@@ -24,6 +24,7 @@ public abstract class Pokemons {
         this.defense = defense;
         this.specialAvailable = true;
         this.limenis = BASIC_LEVEL;
+        this.maxHp = hp;
     }
 
     

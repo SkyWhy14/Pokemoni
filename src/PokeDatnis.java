@@ -3,10 +3,19 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5cee519b5ca8119ac4fa485d3f9b494ee73648a6
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5cee519b5ca8119ac4fa485d3f9b494ee73648a6
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -155,8 +164,13 @@ public class PokeDatnis {
 
                             if (metode != null) {
                                 switch (metode) {
+
+                                    case "Cinities ar citu pokemonu":
+                                        Metodes.CinitiesArCituPokemonu(pokemoni);
+
                                     case "Cīnities ar citu pokemonu":
                                        Metodes.cinities(p, p);
+
                                         break;
                                     case "Dziedēties":
                                         Metodes.Dziedeties(p);
