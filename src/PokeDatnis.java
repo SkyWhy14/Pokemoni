@@ -211,21 +211,6 @@ public class PokeDatnis {
                             JOptionPane.INFORMATION_MESSAGE
                     );
 
-                    try {
-                        File soundFile = new File(".//audio//abra.wav");
-                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
-                        Clip clip = AudioSystem.getClip();
-                        clip.open(audioInputStream);
-                        clip.start();
-
-                       
-                        Thread.sleep(clip.getMicrosecondLength() / 1000);
-
-                        clip.close();
-                    } catch (Exception e) {
-                      
-                        e.printStackTrace();
-                    }
                     break;
             }
         }while(!izvele.equals("Aizvērt programmu"));

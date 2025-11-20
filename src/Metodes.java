@@ -2,7 +2,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import javax.sound.sampled.*;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
