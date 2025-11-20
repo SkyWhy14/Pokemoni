@@ -27,8 +27,21 @@ public abstract class Pokemons {
         this.maxHp = hp;
     }
 
-    
+    @Override
+    public String toString() {
+        return nosaukums;
+    }
+    protected boolean paralizets = false;
 
+    protected boolean weakened = false;
+    public boolean irVajas() {
+		return weakened;
+	}
+
+    public boolean irParalizets() {
+        return paralizets;
+    }
+    
 	public boolean isAlive() {
         return veseliba > 0;
     }
@@ -141,6 +154,14 @@ public abstract class Pokemons {
                 "Special: " + (specialAvailable ? "Pieejams" : "Nav pieejams") + "\n" +
                 "----------------------------------------";
     }
+
+    // Paralīze
+    public boolean isParalizets() { return paralizets; }
+    public void setParalizets(boolean p) { paralizets = p; }
+
+    // Vājākais stāvoklis
+    public boolean isWeakened() { return weakened; }
+    public void setWeakened(boolean w) { weakened = w; }
 
 	
 	

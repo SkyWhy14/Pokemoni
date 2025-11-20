@@ -1,15 +1,13 @@
 import java.io.File;
 import java.util.ArrayList;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -41,7 +39,7 @@ public class PokeDatnis {
         String[] metodes = {
                 "Cīnities ar citu pokemonu",
                 "Dziedēties",
-                "Attēstēties",
+                "Attīstīties",
                 "Atpakaļ"
         };
 
@@ -106,87 +104,125 @@ public class PokeDatnis {
                 // 2. ATRIBUTU PARĀDĪŠANA
                 // ------------------------
                 //vajag lai piemeram elektiriskie pokemoni butu atseviski no normalajiem 
-                case "Atributu aplūkošana":
-                   if(pokemoni.isEmpty()) {
-					   JOptionPane.showMessageDialog(null, "Nav pieejamu Pokémonu!",
-							   "Pokemoni",
-							   JOptionPane.WARNING_MESSAGE);
-				   } else {
-					   Pokemons p = (Pokemons) JOptionPane.showInputDialog(null,
-							   "Izvēlies pokemona atribūtus:", "Pokemona Atribūti",
-							   JOptionPane.QUESTION_MESSAGE, null, pokemoni.toArray(), pokemoni.get(0));
+            case "Atributu aplūkošana":
+                if (pokemoni.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Nav izveidots neviens pokemons.",
+                            "Pokemoni", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Nav pieejamu Pokémonu!",
+                            "Pokemoni",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                } else {
+                    StringBuilder info = new StringBuilder();
 
-					   if (p != null) {
-						   JTextArea textArea = new JTextArea(p.getAtributi());
-						   textArea.setEditable(false);
-						   JScrollPane scrollPane = new JScrollPane(textArea);
-						   scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-						   scrollPane.setPreferredSize(new java.awt.Dimension(300, 200));
+                    info.append("⚡ Elektiskie Pokemoni:\n");
+                    for (Pokemons p : pokemoni) {
+                        if (p instanceof ElectriskaisP) {
+                            info.append("- ").append(p.nosaukums)
+                                .append(" | HP: ").append(p.veseliba).append("/").append(p.maxHp)
+                                .append(" | ATK: ").append(p.uzbrukums)
+                                .append(" | DEF: ").append(p.defense)
+                                .append(" | Special: ").append(p.specialAvailable ? "Pieejams" : "Izmantots")
+                                .append("\n");
+                        }
+                    }
 
-						   JOptionPane.showMessageDialog(null, scrollPane, "Pokemona Atribūti", JOptionPane.INFORMATION_MESSAGE);
-					   }
-					   break;
-				   }
-                   break;
+                    info.append("\n💧 Ūdens Pokemoni:\n");
+                    for (Pokemons p : pokemoni) {
+                        if (p instanceof UdensP) {
+                            info.append("- ").append(p.nosaukums)
+                                .append(" | HP: ").append(p.veseliba).append("/").append(p.maxHp)
+                                .append(" | ATK: ").append(p.uzbrukums)
+                                .append(" | DEF: ").append(p.defense)
+                                .append(" | Special: ").append(p.specialAvailable ? "Pieejams" : "Izmantots")
+                                .append("\n");
+                        }
+                    }
+
+                    info.append("\n⚪ Parastie Pokemoni:\n");
+                    for (Pokemons p : pokemoni) {
+                        if (!(p instanceof ElectriskaisP) && !(p instanceof UdensP)) {
+                            info.append("- ").append(p.nosaukums)
+                                .append(" | HP: ").append(p.veseliba).append("/").append(p.maxHp)
+                                .append(" | ATK: ").append(p.uzbrukums)
+                                .append(" | DEF: ").append(p.defense)
+                                .append(" | Special: ").append(p.specialAvailable ? "Pieejams" : "Izmantots")
+                                .append("\n");
+                        }
+                    }
+
+                    JTextArea textArea = new JTextArea(info.toString());
+                    textArea.setEditable(false);
+                    JScrollPane scrollPane = new JScrollPane(textArea);
+                    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    scrollPane.setPreferredSize(new java.awt.Dimension(500, 400));
+
+                    JOptionPane.showMessageDialog(null, scrollPane,
+                            "Pokémonu Atribūti", JOptionPane.INFORMATION_MESSAGE);
+                }
+                break;
+
+
+					   
 
                 // ------------------------
                 // 3. METOŽU IZSAUKŠANA
                 // ------------------------
-                case "Izsaukt Pokemona metodi":
-                    if (pokemoni.isEmpty()) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Nav pieejamu Pokémonu!",
-                                "Pokemoni",
-                                JOptionPane.WARNING_MESSAGE
-                        );
-                    } else {
-                        Pokemons p = (Pokemons) JOptionPane.showInputDialog(null,
-                                "Izvēlies pokemona metodi:", "Metodes",
-                                JOptionPane.QUESTION_MESSAGE, null, pokemoni.toArray(), pokemoni.get(0));
+            case "Izsaukt Pokemona metodi":
+                if (pokemoni.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Nav pieejamu Pokémonu!",
+                            "Pokemoni",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                } else {
+                    String[] metodes1 = {
+                        "Cīnities ar citu pokemonu",
+                        "Dziedēties",
+                        "Attīstīties",
+                        "Atpakaļ"
+                    };
 
-                        if (p != null) {
-                            String metode = (String) JOptionPane.showInputDialog(
-                                    null,
-                                    "Izvēlies metodi:",
-                                    "Metodes izvēle",
-                                    JOptionPane.QUESTION_MESSAGE,
-                                    null,
-                                    metodes,
-                                    metodes[0]
-                            );
+                    String metode = (String) JOptionPane.showInputDialog(
+                            null,
+                            "Izvēlies metodi:",
+                            "Metodes izvēle",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            metodes,
+                            metodes[0]
+                    );
 
-                            if (metode != null) {
-                                switch (metode) {
-
-                                    case "Cinities ar citu pokemonu":
-                                        Metodes.CinitiesArCituPokemonu(pokemoni);
-
-                                    case "Cīnities ar citu pokemonu":
-                                       Metodes.cinities(p, p);
-
-                                        break;
-                                    case "Dziedēties":
-                                        Metodes.Dziedeties(p);
-                                        break;
-                                    case "Attīstīties":
-                                        Metodes.AttistitLimeni(p);
-                                        break;
-                                    case "Atpakaļ":
-                                        // Nekas netiek darīts, atgriežas izvēlnē
-                                        break;
-                                    default:
-                                        JOptionPane.showMessageDialog(
-                                                null,
-                                                "Nepareiza metodes izvēle!",
-                                                "Pokemoni",
-                                                JOptionPane.ERROR_MESSAGE
-                                        );
-                                }
-                            }
+                    if (metode != null) {
+                        switch (metode) {
+                            case "Cīnities ar citu pokemonu":
+                                Metodes.CinitiesArCituPokemonu(pokemoni);
+                                break;
+                            case "Dziedēties":
+                           Metodes.Dziedeties(pokemoni);
+                                break;
+                            case "Attīstīties":
+                                Metodes.AttistitLimeni(pokemoni); 
+                                break;
+                            case "Atpakaļ":
+                              
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "Nepareiza metodes izvēle!",
+                                        "Pokemoni",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
                         }
                     }
-                    break;
+                }
+                break;
+
 
                 // ------------------------
                 // 4. TURNĪRS
