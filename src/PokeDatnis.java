@@ -3,13 +3,10 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-<<<<<<< HEAD
-=======
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
->>>>>>> 30fe1508401f762cbd97ba817508e9dbfb32d817
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
