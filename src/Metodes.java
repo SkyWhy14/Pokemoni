@@ -118,7 +118,6 @@ public class Metodes {
                 JOptionPane.QUESTION_MESSAGE, null, pretArray, pretArray[0]);
         if (speletajs2 == null) return;
 
-        // Cīņas cikls
         String[] actions = {"Uzbrukt", "Speciālais", "Aizsardzība +", "Beigt cīņu"};
 
         while (speletajs1.isAlive() && speletajs2.isAlive()) {
@@ -130,16 +129,8 @@ public class Metodes {
                         "Cīņa", JOptionPane.QUESTION_MESSAGE, null, actions, actions[0]);
                 if (act1 == null || act1.equals("Beigt cīņu")) return;
 
-                int dmg1 = speletajs1.getUzbrukums();
-                if (speletajs2.isWeakened()) dmg1 = (int)(dmg1 * 0.8);
-
-                if (act1.equals("Speciālais")) {
-                    speletajs1.specialAttack(speletajs2);
-                } else if (act1.equals("Uzbrukt")) {
-                    speletajs2.takeDamage(dmg1);
-                }
+                doAction(speletajs1, speletajs2, act1);
             } else {
-                // ja paralizēts, izlaiž gājienu
                 speletajs1.setParalizets(false);
             }
 
@@ -152,58 +143,52 @@ public class Metodes {
                         "Cīņa", JOptionPane.QUESTION_MESSAGE, null, actions, actions[0]);
                 if (act2 == null || act2.equals("Beigt cīņu")) return;
 
-                int dmg2 = speletajs2.getUzbrukums();
-                if (speletajs1.isWeakened()) dmg2 = (int)(dmg2 * 0.8);
-
-                if (act2.equals("Speciālais")) {
-                    speletajs2.specialAttack(speletajs1);
-                } else if (act2.equals("Uzbrukt")) {
-                    speletajs1.takeDamage(dmg2);
-                }
+                doAction(speletajs2, speletajs1, act2);
             } else {
-                // ja paralizēts, izlaiž gājienu
                 speletajs2.setParalizets(false);
             }
         }
 
-        // Atgriež uzvarētāju
         Pokemons uzvaretajs = speletajs1.isAlive() ? speletajs1 : speletajs2;
         System.out.println("Uzvarētājs: " + uzvaretajs.getNosaukums());
     }
-    
+
+       
 
     
 
     private static void doAction(Pokemons actor, Pokemons target, String act) {
         switch (act) {
-        case "Uzbrukt":
+            case "Uzbrukt":
+                // Atskaņo skaņu
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                            new File("./audio/abra.wav"));
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                        new File("./audio/abra.wav"));
+                // Uzbrukuma izpilde
+                int dmg = actor.basicAttack();
+                if (target.isWeakened()) dmg = (int)(dmg * 0.8); // ja pretinieks pavajināts
+                target.takeDamage(dmg);
+                break;
 
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            target.takeDamage(actor.basicAttack());
-            break;
-            
             case "Speciālais":
                 actor.specialAttack(target);
                 break;
+
             case "Aizsardzība +":
                 actor.boostDefense(3);
                 break;
+
             default:
-                JOptionPane.showMessageDialog(null, "Nezināma darbība.");
+                System.out.println("Nezināma darbība: " + act);
         }
     }
-    
     //izvelas kuru pokmonu dziedet staro tiem pokemoniem kuri ir dzive
     public static void Dziedeties(ArrayList<Pokemons> pokemoni) {
         ArrayList<Pokemons> dziviPokemoni = new ArrayList<>();
