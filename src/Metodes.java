@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Metodes {
-//ar jLabel un pogam
+
     public static void paradiPokemonPasauliArSkanu() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -144,9 +144,23 @@ public class Metodes {
 
     private static void doAction(Pokemons actor, Pokemons target, String act) {
         switch (act) {
-            case "Uzbrukt":
-                target.takeDamage(actor.basicAttack());
-                break;
+        case "Uzbrukt":
+
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                        new File("./audio/abra.wav"));
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            target.takeDamage(actor.basicAttack());
+            break;
+            
             case "Speciālais":
                 actor.specialAttack(target);
                 break;
@@ -164,10 +178,26 @@ public class Metodes {
                 "Cik HP atgūt (1–" + (p.getMaxHp() - p.getVeseliba()) + ")?",
                 "10", p.getMaxHp() - p.getVeseliba(), 1
         );
-        if (healAmount != -1) p.heal(healAmount);
+        if (healAmount != -1) {
+        	
+        	try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                        new File("./audio/pokemon-heal.wav"));
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        	
+        	p.heal(healAmount);
+        }
     }
 
     public static void AttistitLimeni(Pokemons p) {
+    	
         int healAmount = p.getMaxHp() - p.getVeseliba();
         p.heal(healAmount);
         p.uzbrukums += 5;
@@ -175,7 +205,20 @@ public class Metodes {
         p.limenis += 1;
         p.veseliba+= 10;
 
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-evolve.wav"));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         JOptionPane.showMessageDialog(null,
+        		
                 p.getNosaukums() + " līmenis paaugstināts!\n"
                         + "HP pilns.\n"
                         + "Uzbrukums +5\n"
@@ -203,7 +246,17 @@ public class Metodes {
             else
                 doAction(p2, p1, "Uzbrukt");
         }
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("./audio/pokemon-catch.wav"));
 
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JOptionPane.showMessageDialog(null,
                 "Uzvarētājs: " + (p1.isAlive() ? p1.getNosaukums() : p2.getNosaukums()));
     }
@@ -227,10 +280,13 @@ public class Metodes {
         for (int i = 0; i < pokemoni.size(); i += 2) {
             Pokemons p1 = pokemoni.get(i);
             Pokemons p2 = pokemoni.get(i + 1);
-
+            
             String pairInfo = "Cīņa starp:\n" +
                               p1.getNosaukums() + " (" + p1.getTips() + ") VS " +
                               p2.getNosaukums() + " (" + p2.getTips() + ")";
+            
+            
+            
             JOptionPane.showMessageDialog(null, pairInfo, "Turnīra Cīņa", JOptionPane.INFORMATION_MESSAGE);
 
             // Lietotājs cīnās ar pirmajiem pokemoniem
@@ -244,3 +300,4 @@ public class Metodes {
 	
 	
 }
+	

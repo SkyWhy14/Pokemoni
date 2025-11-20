@@ -14,7 +14,7 @@ public class NormalaisPokemons extends Pokemons {
         }
 
         int dmg = uzbrukums * 2;
-        JOptionPane.showMessageDialog(null, nosaukums + " izmantoja ĪPAŠO UZBRUKUMU un nodara " + dmg + " bojājumus!");
+        JOptionPane.showMessageDialog(null, nosaukums + " izmantoja ĪPAŠO UZBRUKUMU un nodara " + dmg + " zaudējumu!");
         target.takeDamage(dmg);
 
         specialAvailable = false; // reizi cīņā

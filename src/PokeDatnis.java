@@ -1,13 +1,15 @@
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -18,7 +20,7 @@ public class PokeDatnis {
     
 
     public void sakums() {
-
+    	
         JOptionPane.showMessageDialog(
                 null,
                 "Laipni lūdzam Pokémonu pasaulē!\nSagatavojies aizraujošām cīņām!",
@@ -37,10 +39,10 @@ public class PokeDatnis {
                 "Aizvērt programmu"
         };
         String[] metodes = {
-                "Cinities ar citu pokemonu",
-                "Dziedeties",
-                "Attistities",
-                "Atpakal"
+                "Cīnities ar citu pokemonu",
+                "Dziedēties",
+                "Attēstēties",
+                "Atpakaļ"
         };
 
         ArrayList<Pokemons> pokemoni = new ArrayList<>();
@@ -71,6 +73,18 @@ public class PokeDatnis {
 
                 if (jauns != null) {
                     pokemoni.add(jauns);
+                    try {
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                                new File("./audio/pokemon-catch.wav"));
+
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioInputStream);
+                        clip.start();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     JOptionPane.showMessageDialog(
                             null,
                             "Veiksmīgi izveidots pokemons: " + jauns.nosaukums,
@@ -144,16 +158,21 @@ public class PokeDatnis {
 
                             if (metode != null) {
                                 switch (metode) {
+
                                     case "Cinities ar citu pokemonu":
                                         Metodes.CinitiesArCituPokemonu(pokemoni);
+
+                                    case "Cīnities ar citu pokemonu":
+                                       Metodes.cinities(p, p);
+
                                         break;
-                                    case "Dziedeties":
+                                    case "Dziedēties":
                                         Metodes.Dziedeties(p);
                                         break;
-                                    case "Attistities":
+                                    case "Attīstīties":
                                         Metodes.AttistitLimeni(p);
                                         break;
-                                    case "Atpakal":
+                                    case "Atpakaļ":
                                         // Nekas netiek darīts, atgriežas izvēlnē
                                         break;
                                     default:
