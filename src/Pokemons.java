@@ -82,7 +82,7 @@ public abstract class Pokemons {
         if (veseliba < 0) veseliba = 0;
 
         JOptionPane.showMessageDialog(null,
-                nosaukums + " saņēma " + finalDamage + " dmg "
+                nosaukums + " zaudēja " + finalDamage + " dmg "
                         + "(aizsardzība -" + reducedDamage + ")\n"
                         + "HP: " + veseliba + "/" + maxHp);
     }
