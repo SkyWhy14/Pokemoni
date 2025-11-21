@@ -364,7 +364,7 @@ public class Metodes {
             JOptionPane.showMessageDialog(null, pairInfo, "Turnīra Cīņa", JOptionPane.INFORMATION_MESSAGE);
 
             // Lietotājs cīnās ar pirmajiem pokemoniem
-           cinities(p1, p2); // Šeit tiek izmantota Tava interaktīvā cīņas metode
+            CinitiesArCituPokemonu(pokemoni); // Šeit tiek izmantota Tava interaktīvā cīņas metode
         }
 
         JOptionPane.showMessageDialog(null, "Turnīrs ir noslēdzies!");
